@@ -5,5 +5,7 @@ const props = defineProps<{
 </script>
 
 <template>
-  <p style="color: tomato">{{ props.message }}</p>
+  <p style="color: tomato">
+    {{ props.message }}
+  </p>
 </template>
