@@ -7,6 +7,15 @@ import "../styles/base.scss";
 
 const preview: Preview = {
   parameters: {
+    backgrounds: {
+      values: [
+        { name: "White", value: "#FFFFFF" },
+        { name: "Cold", value: "#ECEFF1" },
+        { name: "Warm", value: "#FFF7F1" },
+      ],
+      // 👇 Specify which background is shown by default
+      default: "White",
+    },
     controls: {
       matchers: {
         color: /(background|color)$/i,

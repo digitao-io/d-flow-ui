@@ -5,6 +5,12 @@ import { DButton } from ".";
 const meta: Meta<typeof DButton> = {
   title: "Components/DButton",
 
+  parameters: {
+    backgrounds: {
+      default: "Warm",
+    },
+  },
+
   render: (args) => ({
     components: { DButton },
     setup() {
