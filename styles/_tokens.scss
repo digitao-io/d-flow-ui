@@ -1,0 +1,105 @@
+$color-neutral-b: #393939;
+$color-neutral-b-t1: #787878;
+$color-neutral-g: #a6a6a6;
+$color-neutral-g-t1: #e2e2e2;
+$color-neutral-w: #ffffff;
+
+$color-flavor1: #dd782d;
+$color-flavor1-t1: #df8c4c;
+$color-flavor1l: #f2dccb;
+$color-flavor1l-t1: #fcefe6;
+$color-flavor1l-t2: #fff7f1;
+
+$color-flavor2: #2573ac;
+$color-flavor2-t1: #3f80af;
+$color-flavor2l: #becfdb;
+$color-flavor2l-t1: #d4dde2;
+$color-flavor2l-t2: #eceff1;
+
+$color-error: #dd2e2e;
+
+$space-s: 0.5rem;
+$space-m: 1rem;
+$space-l: 2rem;
+
+$input-size: 2.25rem;
+
+$font-family: "Roboto", sans-serif;
+$font-weight-black: 900;
+$font-weight-bold: 700;
+$font-weight-medium: 500;
+$font-weight-normal: 300;
+$font-size-title-xl: 40px;
+$font-size-title-l: 36px;
+$font-size-title: 32px;
+$font-size-text-l: 20px;
+$font-size-text: 16px;
+$font-size-text-s: 14px;
+$line-height-title: 1;
+$line-height-text: 1.5;
+$text-transform-title: uppercase;
+
+$anim-duration: 0.05s;
+
+@mixin typography-title-xl {
+  font-family: $font-family;
+  font-weight: $font-weight-black;
+  font-size: $font-size-title-xl;
+  line-height: $line-height-title;
+  text-transform: $text-transform-title;
+}
+
+@mixin typography-title-l {
+  font-family: $font-family;
+  font-weight: $font-weight-black;
+  font-size: $font-size-title-l;
+  line-height: $line-height-title;
+  text-transform: $text-transform-title;
+}
+
+@mixin typography-title {
+  font-family: $font-family;
+  font-weight: $font-weight-black;
+  font-size: $font-size-title;
+  line-height: $line-height-title;
+  text-transform: $text-transform-title;
+}
+
+@mixin typography-text-l {
+  font-family: $font-family;
+  font-weight: $font-weight-normal;
+  font-size: $font-size-text-l;
+  line-height: $line-height-text;
+}
+
+@mixin typography-text {
+  font-family: $font-family;
+  font-weight: $font-weight-normal;
+  font-size: $font-size-text;
+  line-height: $line-height-text;
+}
+
+@mixin typography-text--bold {
+  font-family: $font-family;
+  font-weight: $font-weight-bold;
+  font-size: $font-size-text;
+  line-height: $line-height-text;
+}
+
+@mixin typography-text--medium {
+  font-family: $font-family;
+  font-weight: $font-weight-medium;
+  font-size: $font-size-text;
+  line-height: $line-height-text;
+}
+
+@mixin typography-text-s {
+  font-family: $font-family;
+  font-weight: $font-weight-normal;
+  font-size: $font-size-text-s;
+  line-height: $line-height-text;
+}
+
+@mixin round-edged-block {
+  border-top-right-radius: 8px;
+}
