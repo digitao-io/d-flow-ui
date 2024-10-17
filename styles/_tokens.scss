@@ -6,8 +6,8 @@ $color-neutral-w: #ffffff;
 
 $color-flavor1: #dd782d;
 $color-flavor1-t1: #df8c4c;
-$color-flavor1l: #f2dccb;
-$color-flavor1l-t1: #fcefe6;
+$color-flavor1l: #e9cbb4;
+$color-flavor1l-t1: #eed3c0;
 $color-flavor1l-t2: #fff7f1;
 
 $color-flavor2: #2573ac;
@@ -39,7 +39,7 @@ $line-height-title: 1;
 $line-height-text: 1.5;
 $text-transform-title: uppercase;
 
-$anim-duration: 0.05s;
+$anim-duration: 0.08s;
 
 @mixin typography-title-xl {
   font-family: $font-family;
