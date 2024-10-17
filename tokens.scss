@@ -1,0 +1,73 @@
+$color-neutral-b: #393939;
+$color-neutral-g: #a6a6a6;
+$color-neutral-w: #ffffff;
+
+$color-flavor1: #dd782d;
+$color-flavor1-l1: #f2dccb;
+$color-flavor1-l2: #fcefe6;
+$color-flavor1-l3: #fff7f1;
+
+$color-flavor-l1: #becfdb;
+$color-flavor-l2: #d4dde2;
+$color-flavor-l3: #eceff1;
+
+$color-error: #dd2e2e;
+
+@mixin typography-title-xl {
+  font-family: "Roboto", sans-serif;
+  font-weight: 900;
+  font-size: 40px;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+@mixin typography-title-l {
+  font-family: "Roboto", sans-serif;
+  font-weight: 900;
+  font-size: 36px;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+@mixin typography-title{
+  font-family: "Roboto", sans-serif;
+  font-weight: 900;
+  font-size: 32px;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+@mixin typography-text-l{
+  font-family: "Roboto", sans-serif;
+  font-weight: 300;
+  font-size: 20px;
+  line-height: 1.5;
+}
+
+@mixin typography-text-s{
+  font-family: "Roboto", sans-serif;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+@mixin typography-text{
+  font-family: "Roboto", sans-serif;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+@mixin typography-text-bold{
+  font-family: "Roboto", sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+@mixin typography-text-medium{
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.5;
+}
