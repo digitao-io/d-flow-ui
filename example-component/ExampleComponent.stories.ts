@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/vue3";
 import { ExampleComponent } from ".";
 
 const meta: Meta<typeof ExampleComponent> = {
-  title: "Components/ExampleComponent",
+  title: "ExampleComponent",
   component: ExampleComponent,
   render: (args) => ({
     components: { ExampleComponent },

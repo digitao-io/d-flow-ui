@@ -12,6 +12,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.11.1",
+    "@storybook/addon-essentials": "^8.3.4",
     "@storybook/vue3": "^8.3.3",
     "@storybook/vue3-vite": "^8.3.3",
     "@stylistic/eslint-plugin": "^2.8.0",

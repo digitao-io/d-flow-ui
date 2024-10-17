@@ -1,5 +1,8 @@
 import type { Preview } from "@storybook/vue3";
 
+import "../theme-default.css";
+import "../main.css";
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 (window as any).context = {};
 
