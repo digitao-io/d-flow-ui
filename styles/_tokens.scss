@@ -100,6 +100,13 @@ $anim-duration: 0.08s;
   line-height: $line-height-text;
 }
 
+@mixin typography-text-s--bold {
+  font-family: $font-family;
+  font-weight: $font-weight-bold;
+  font-size: $font-size-text-s;
+  line-height: $line-height-text;
+}
+
 @mixin round-edged-block {
   border-top-right-radius: 8px;
 }
