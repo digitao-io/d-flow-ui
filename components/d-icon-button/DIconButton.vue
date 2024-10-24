@@ -2,6 +2,7 @@
   <button
     class="d-icon-button"
   >
+    <font-awesome-icon :icon="faArrowLeft" />
     <slot />
   </button>
 
@@ -11,6 +12,9 @@
 </template>
 
 <script setup lang="ts">
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+
 const props = defineProps<{
   message: string;
 }>();
