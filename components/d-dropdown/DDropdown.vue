@@ -15,7 +15,7 @@
         class="d-dropdown__button"
         @click="toggleDropdown"
       >
-        &#9660;
+        <font-awesome-icon :icon="faAngleDown" />
       </button>
       <ul
         v-if="showDropdown"
@@ -35,6 +35,8 @@
 </template>
 
 <script setup lang="ts">
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
 import { ref } from "vue";
 
 const props = defineProps<{
@@ -106,7 +108,9 @@ const selectOption = (option: string) => {
 .d-dropdown__button {
   border: none;
   height: tokens.$input-size;
+  width: tokens.$input-size;
   background-color: tokens.$color-flavor1;
+  color: white;
   @include tokens.round-edged-block;
   @include tokens.typography-text--medium;
 }
