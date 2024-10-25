@@ -2,39 +2,31 @@
   <div
     class="d-pagination"
   >
-    <button
-      class="d-pagination__front"
-      :disabled="currentPage === 1"
+    <d-icon-button
       @click="goToFirstPage"
     >
       <font-awesome-icon :icon="faAnglesLeft" />
-    </button>
-    <button
-      class="d-pagination__previous"
-      :disabled="currentPage <= 1"
+    </d-icon-button>
+    <d-icon-button
       @click="prevPage"
     >
       <font-awesome-icon :icon="faAngleLeft" />
-    </button>
+    </d-icon-button>
     <span
       class="d-pagination__page"
     >
       {{ currentPage }} / {{ props.totalPage }}
     </span>
-    <button
-      class="d-pagination__next"
-      :disabled="currentPage >= props.totalPage"
+    <d-icon-button
       @click="nextPage"
     >
       <font-awesome-icon :icon="faAngleRight" />
-    </button>
-    <button
-      class="d-pagination__last"
-      :disabled="currentPage === props.totalPage"
+    </d-icon-button>
+    <d-icon-button
       @click="goToLastPage"
     >
       <font-awesome-icon :icon="faAnglesRight" />
-    </button>
+    </d-icon-button>
   </div>
 </template>
 
@@ -47,6 +39,7 @@ import {
   faAnglesRight,
   faAngleRight,
 } from "@fortawesome/free-solid-svg-icons";
+import { DIconButton } from "../d-icon-button";
 
 const props = defineProps<{
   totalPage: number;
@@ -85,27 +78,6 @@ const goToLastPage = () => {
   display:flex;
   align-items: center;
   gap: tokens.$space-m
-}
-.d-pagination__front,
-.d-pagination__next,
-.d-pagination__previous,
-.d-pagination__last,
-.d-pagination__end {
-  width: tokens.$input-size;
-  height: tokens.$input-size;
-  border-radius: 50%;
-  border: none;
-  background-color: tokens.$color-flavor2l;
-  color: black;
-  cursor: pointer;
-  &:active {
-    transform: translateY(1px);
-  }
-
-  &:hover,
-  &:active {
-      background-color: tokens.$color-flavor2l-t1;
-  }
 }
 .d-pagination__page {
   @include tokens.typography-text--medium;

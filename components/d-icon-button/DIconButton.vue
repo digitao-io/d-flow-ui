@@ -2,23 +2,9 @@
   <button
     class="d-icon-button"
   >
-    <font-awesome-icon :icon="faArrowLeft" />
     <slot />
   </button>
-
-  <p style="color: tomato">
-    {{ props.message }}
-  </p>
 </template>
-
-<script setup lang="ts">
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-
-const props = defineProps<{
-  message: string;
-}>();
-</script>
 
 <style lang="scss" scoped>
 .d-icon-button {

@@ -30,7 +30,4 @@ export default meta;
 type Story = StoryObj<typeof DIconButton>;
 
 export const Default: Story = {
-  args: {
-    message: "hello world",
-  },
 };
