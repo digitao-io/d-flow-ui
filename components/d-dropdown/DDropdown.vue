@@ -8,14 +8,20 @@
         v-model="searchQuery"
         class="d-dropdown__input"
         type="text"
-        placeholder="bitte geben Sie Text ein"
-        @input="filterOptions"
+        :placeholder="props.placeholder"
       >
       <button
         class="d-dropdown__button"
         @click="toggleDropdown"
       >
-        <font-awesome-icon :icon="faAngleDown" />
+        <font-awesome-icon
+          v-if="!showDropdown"
+          :icon="faAngleDown"
+        />
+        <font-awesome-icon
+          v-else
+          :icon="faAngleUp"
+        />
       </button>
       <ul
         v-if="showDropdown"
@@ -23,11 +29,15 @@
       >
         <li
           v-for="option in filteredOptions"
-          :key="option"
+          :key="option.value"
           class="d-dropdown__item"
-          @click="selectOption(option)"
         >
-          {{ option }}
+          <button
+            class="d-dropdown__item-button"
+            @click="selectOption(option)"
+          >
+            {{ option.label }}
+          </button>
         </li>
       </ul>
     </div>
@@ -36,103 +46,112 @@
 
 <script setup lang="ts">
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
-import { ref } from "vue";
+import { faAngleDown, faAngleUp } from "@fortawesome/free-solid-svg-icons";
+import { computed, ref } from "vue";
+
+interface OptionDefinition {
+  label: string;
+  value: string;
+}
 
 const props = defineProps<{
   label: string;
+  options: OptionDefinition[];
+  placeholder: string;
 }>();
 
+const model = defineModel<string>();
+
 const showDropdown = ref(false);
-const options = ref(["Eingegangen", "Eingepackt"]);
-const filteredOptions = ref(options.value);
 const searchQuery = ref("");
 
-const filterOptions = () => {
-  if (searchQuery.value.trim() === "") {
-    filteredOptions.value = options.value;
-  }
-  else {
-    filteredOptions.value = options.value.filter((option) =>
-      option.toLowerCase().includes(searchQuery.value.toLowerCase()),
-    );
-  }
-};
+const filteredOptions = computed(() =>
+  props.options.filter((option) => option.label.toLocaleLowerCase().startsWith(searchQuery.value.toLocaleLowerCase())));
 
-const toggleDropdown = () => {
+function toggleDropdown() {
   showDropdown.value = !showDropdown.value;
 };
 
-const selectOption = (option: string) => {
-  searchQuery.value = option;
+function selectOption(option: OptionDefinition) {
+  model.value = option.value;
   showDropdown.value = false;
 };
 </script>
 
 <style lang="scss" scoped>
-.d-dropdown__label {
-  display: block;
-  color: tokens.$color-flavor1;
-  @include tokens.typography-text-s--bold;
-}
-
-.d-dropdown__container {
-  display: inline-flex;
-  align-items: center;
-  position: relative;
-}
-
-.d-dropdown__input {
-  height: tokens.$input-size;
-  padding-left: tokens.$space-s;
-  padding-right: tokens.$space-s;
-  border: none;
-  border-bottom: 2px solid tokens.$color-flavor1;
-  @include tokens.typography-text--medium;
-  background-color: tokens.$color-flavor1l-t1;
-
-  &::placeholder {
-    color: tokens.$color-neutral-g;
+.d-dropdown {
+  &__label {
+    display: block;
+    color: tokens.$color-flavor1;
+    @include tokens.typography-text-s--bold;
   }
 
-  &:focus,
-  &:active {
+  &__container {
+    display: inline-flex;
+    align-items: center;
+    position: relative;
+  }
 
-    outline: none;
+  &__input {
+    height: tokens.$input-size;
+    padding-left: tokens.$space-s;
+    padding-right: tokens.$space-s;
+    border: none;
+    border-bottom: 2px solid tokens.$color-flavor1;
+    @include tokens.typography-text--medium;
+    background-color: tokens.$color-flavor1l-t1;
+
+    &::placeholder {
+      color: tokens.$color-neutral-g;
+    }
+
+    &:focus,
+    &:active {
+      outline: none;
+      color: tokens.$color-neutral-b;
+      border-bottom-color: tokens.$color-flavor1;
+      background-color: tokens.$color-flavor1l;
+    }
+  }
+
+  &__button {
+    @include tokens.round-edged-block;
+    @include tokens.typography-text--medium;
+    border: none;
+    height: tokens.$input-size;
+    width: tokens.$input-size;
+    background-color: tokens.$color-flavor1;
+    color: white;
+    cursor: pointer;
+  }
+
+  &__list {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 9999;
+    margin: 0;
+    padding: 0;
+    background-color: tokens.$color-flavor1l-t1;
+    list-style: none;
+  }
+
+  &__item-button {
+    @include tokens.typography-text--medium;
+    display: block;
+    border: none;
+    width: 100%;
+    height: tokens.$input-size;
+    padding: 0 tokens.$space-m;
     color: tokens.$color-neutral-b;
-    border-bottom-color: tokens.$color-flavor1;
-    background-color: tokens.$color-flavor1l;
+    background-color: transparent;
+    text-align: start;
+    cursor: pointer;
+
+    &:hover {
+      background-color: tokens.$color-flavor1l;
+    }
   }
 }
-
-.d-dropdown__button {
-  border: none;
-  height: tokens.$input-size;
-  width: tokens.$input-size;
-  background-color: tokens.$color-flavor1;
-  color: white;
-  @include tokens.round-edged-block;
-  @include tokens.typography-text--medium;
-}
-
-.d-dropdown__list {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  background-color: tokens.$color-flavor1l-t1;
-  list-style: none;
-  margin: 0;
-  padding-left: tokens.$space-s;
-  z-index: 100;
-}
-
-.d-dropdown__item {
-  @include tokens.typography-text--medium;
-  cursor: pointer;
-  &:hover {
-    background-color: tokens.$color-flavor1l;
-  }
-}
-
 </style>
