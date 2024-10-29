@@ -5,10 +5,12 @@
     </span>
     <div class="d-dropdown__container">
       <input
-        v-model="searchQuery"
         class="d-dropdown__input"
         type="text"
         :placeholder="props.placeholder"
+        :value="showDropdown ? searchQuery : selectedLabel"
+        @input="handleInput"
+        @keydown.enter="handleEnterKeydown"
       >
       <button
         class="d-dropdown__button"
@@ -47,7 +49,7 @@
 <script setup lang="ts">
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { faAngleDown, faAngleUp } from "@fortawesome/free-solid-svg-icons";
-import { computed, ref } from "vue";
+import { computed, nextTick, ref } from "vue";
 
 interface OptionDefinition {
   label: string;
@@ -62,19 +64,48 @@ const props = defineProps<{
 
 const model = defineModel<string>();
 
-const showDropdown = ref(false);
-const searchQuery = ref("");
+const showDropdown = ref<boolean>(false);
+const searchQuery = ref<string>("");
 
 const filteredOptions = computed(() =>
   props.options.filter((option) => option.label.toLocaleLowerCase().startsWith(searchQuery.value.toLocaleLowerCase())));
+const selectedLabel = computed(() =>
+  props.options.find((option) => option.value === model.value)?.label ?? "");
 
-function toggleDropdown() {
-  showDropdown.value = !showDropdown.value;
-};
+async function handleInput(event: Event) {
+  const newValue = (event.target! as HTMLInputElement).value;
+
+  if (!showDropdown.value) {
+    toggleDropdown();
+    await nextTick();
+  }
+
+  searchQuery.value = newValue;
+}
+
+function handleEnterKeydown() {
+  if (!filteredOptions.value[0]) {
+    return;
+  }
+
+  model.value = filteredOptions.value[0].value;
+  toggleDropdown();
+}
 
 function selectOption(option: OptionDefinition) {
   model.value = option.value;
-  showDropdown.value = false;
+  toggleDropdown();
+};
+
+function toggleDropdown() {
+  showDropdown.value = !showDropdown.value;
+
+  if (showDropdown.value) {
+    searchQuery.value = "";
+  }
+  else {
+    searchQuery.value = selectedLabel.value;
+  }
 };
 </script>
 
