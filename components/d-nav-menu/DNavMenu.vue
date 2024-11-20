@@ -8,6 +8,7 @@
       <d-nav-menu-item
         :item="item"
         :activated-item="props.activatedItem"
+        :parent-path="props.parentPath ?? []"
         @navigate="handleNavigate"
       />
     </li>
@@ -21,6 +22,7 @@ import DNavMenuItem from "./DNavMenuItem.vue";
 const props = defineProps<{
   items: MenuItem[];
   activatedItem: string[];
+  parentPath?: string[];
 }>();
 
 const emit = defineEmits(["navigate"]);
@@ -31,7 +33,9 @@ function handleNavigate(keys: string[]) {
 </script>
 
 <style lang="scss" scoped>
-.d-nav-menu ul,li {
+.d-nav-menu {
+  margin: 0;
+  padding: 0;
   list-style-type: none;
 }
 </style>

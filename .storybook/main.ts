@@ -27,7 +27,7 @@ const config: StorybookConfig = {
         alias: {
           "@": path.join(__dirname, ".."),
         },
-      }
+      },
     });
   },
 };

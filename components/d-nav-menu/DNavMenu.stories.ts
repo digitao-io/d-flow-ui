@@ -1,25 +1,60 @@
+import { ref } from "vue";
 import type { Meta, StoryObj } from "@storybook/vue3";
-import { action } from "@storybook/addon-actions";
+import { DSidebarLayout } from "../../layouts/d-sidebar-layout";
 import { DNavMenu } from ".";
+
+import { library } from "@fortawesome/fontawesome-svg-core";
+import {
+  faHouse,
+  faBagShopping,
+  faBoxesStacked,
+  faBookOpen,
+  faTags,
+  faUserGroup,
+} from "@fortawesome/free-solid-svg-icons";
+
+library.add(
+  faHouse,
+  faBagShopping,
+  faBoxesStacked,
+  faBookOpen,
+  faTags,
+  faUserGroup,
+);
 
 const meta: Meta<typeof DNavMenu> = {
   title: "Components/DNavMenu",
   component: DNavMenu,
+  parameters: {
+    layout: "fullscreen",
+  },
   render: (args) => ({
-    components: { DNavMenu },
+    components: {
+      DSidebarLayout,
+      DNavMenu,
+    },
     setup() {
+      const activatedItem = ref(["products", "titles"]);
+      function handleNavigate(path: string[]) {
+        activatedItem.value = path;
+      }
       return {
         args,
-        onNavigate: action("on-navigate"),
+        activatedItem,
+        handleNavigate,
       };
     },
     template: `
-      <div>
-        <d-nav-menu
-          v-bind="args"
-          @navigate="onNavigate"
-        />
-      </div>
+      <d-sidebar-layout menu-column-width="280px">
+        <template #menu>
+          <d-nav-menu
+            style="margin-right:1rem;"
+            v-bind="args"
+            :activated-item="activatedItem"
+            @navigate="handleNavigate"
+          />
+        </template>
+      </d-sidebar-layout>
     `,
   }),
 };
@@ -31,14 +66,14 @@ type Story = StoryObj<typeof DNavMenu>;
 export const Default: Story = {
   args: {
     items: [
-      { key: "home", label: "Home", icon: "faHouseFire", children: [] },
-      { key: "orders", label: "Bestellungen", icon: "fa-order", children: [] },
-      { key: "products", label: "Produkte", icon: "fa-products", children: [
-        { key: "products", label: "Produkte", icon: "faHouseFire", children: [] },
-        { key: "titles", label: "Titeln", icon: "faHouseFire", children: [] },
-        { key: "tags", label: "Tags", icon: "faHouseFire", children: [] },
+      { key: "home", label: "Home", icon: "house", children: [] },
+      { key: "orders", label: "Bestellungen", icon: "bag-shopping", children: [] },
+      { key: "products", label: "Produkte", icon: "boxes-stacked", children: [
+        { key: "products", label: "Produkte", icon: "boxes-stacked", children: [] },
+        { key: "titles", label: "Titeln", icon: "book-open", children: [] },
+        { key: "labels", label: "Labels", icon: "tags", children: [] },
       ] },
-      { key: "labels", label: "Labels", icon: "fa-tag", children: [] },
+      { key: "customers", label: "Kunden", icon: "user-group", children: [] },
     ],
     activatedItem: ["products", "titles"],
   },
