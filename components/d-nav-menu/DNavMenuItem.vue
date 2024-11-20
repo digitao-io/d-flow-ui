@@ -1,16 +1,19 @@
 <template>
   <div
-    :class="{ 'd-nav-menu-item__selectedMenu': isSelected}"
+    class="d-nav-menu-item"
+    :class="{ 'd-nav-menu-item__selected': selected}"
   >
     <a
-      @click="handleNavigate(props.item.key)"
+      class="d-nav-menu-item__link"
+      @click="handleItemClick"
     >
       {{ item.label }}
     </a>
-    <d-menu-list
-      v-if="item.children.length !== 0 && isMenuOpen(props.item.key)"
+
+    <d-nav-menu
+      v-if="hasChildren && expanded"
       :items="props.item.children"
-      :selected-item="props.selectedItem"
+      :activated-item="props.activatedItem"
       @navigate="handleNavigate"
     />
   </div>
@@ -18,36 +21,34 @@
 
 <script setup lang="ts">
 import { computed, ref } from "vue";
-import DMenuList from "./DNavMenuList.vue";
-
-interface MenuEntry {
-  key: string;
-  label: string;
-  icon: string;
-  children: MenuEntry[];
-}
+import { MenuItem } from "./DNavMenu.types";
+import DNavMenu from "./DNavMenu.vue";
 
 const props = defineProps<{
-  item: MenuEntry;
-  selectedItem: string[];
+  item: MenuItem;
+  activatedItem: string[];
 }>();
 
-const emit = defineEmits(["navigate"]);
-const isSelected = computed(() => props.selectedItem.includes(props.item.key));
-const openMenus = ref<{ [key: string]: boolean }>({});
+const emit = defineEmits<{
+  navigate: [string[]];
+}>();
 
-function handleNavigate(key: string) {
-  if (openMenus.value[key] === undefined) {
-    openMenus.value[key] = true;
+const hasChildren = computed(() => props.item.children.length > 0);
+const selected = computed(() => props.activatedItem.includes(props.item.key));
+
+const expanded = ref<boolean>(hasChildren.value && selected.value);
+
+function handleItemClick() {
+  if (hasChildren.value) {
+    expanded.value = !expanded.value;
+  } else {
+    handleNavigate([]);
   }
-  else {
-    openMenus.value[key] = !openMenus.value[key];
-  }
-  emit("navigate", key);
 }
 
-function isMenuOpen(key: string) {
-  return openMenus.value[key];
+function handleNavigate(keys: string[]) {
+  keys.unshift(props.item.key);
+  emit("navigate", keys);
 }
 </script>
 

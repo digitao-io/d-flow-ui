@@ -1,32 +1,37 @@
 <template>
-  <div>
-    <d-menu-list
-      :items="props.menuItems"
-      :selected-item="props.activatedItem"
-      @navigate="handleNavigate"
-    />
-  </div>
-  <p>{{ activatedItem }}</p>
+  <ul class="d-nav-menu">
+    <li
+      v-for="item in props.items"
+      :key="item.key"
+      class="d-nav-menu__item-container"
+    >
+      <d-nav-menu-item
+        :item="item"
+        :activated-item="props.activatedItem"
+        @navigate="handleNavigate"
+      />
+    </li>
+  </ul>
 </template>
 
 <script setup lang="ts">
-import DMenuList from "./DNavMenuList.vue";
-
-interface MenuItem {
-  key: string;
-  label: string;
-  icon: string;
-  children: MenuItem[];
-}
+import { MenuItem } from "./DNavMenu.types";
+import DNavMenuItem from "./DNavMenuItem.vue";
 
 const props = defineProps<{
-  menuItems: MenuItem[];
+  items: MenuItem[];
   activatedItem: string[];
 }>();
 
 const emit = defineEmits(["navigate"]);
 
-function handleNavigate(key: string) {
-  emit("navigate", key);
+function handleNavigate(keys: string[]) {
+  emit("navigate", keys);
 }
 </script>
+
+<style lang="scss" scoped>
+.d-nav-menu ul,li {
+  list-style-type: none;
+}
+</style>
