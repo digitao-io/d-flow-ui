@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/vue3";
-import { DGlobalLayout } from ".";
+import { DSidebarLayout } from ".";
 
-const meta: Meta<typeof DGlobalLayout> = {
-  title: "Components/DGlobalLayout",
-  component: DGlobalLayout,
+const meta: Meta<typeof DSidebarLayout> = {
+  title: "Components/DSidebarLayout",
+  component: DSidebarLayout,
   render: (args) => ({
-    components: { DGlobalLayout },
+    components: { DSidebarLayout },
     setup() {
       return {
         args,
@@ -13,7 +13,7 @@ const meta: Meta<typeof DGlobalLayout> = {
     },
     template: `
       <div>
-        <d-global-layout
+        <d-sidebar-layout
           v-bind="args"
         />
       </div>
@@ -23,7 +23,7 @@ const meta: Meta<typeof DGlobalLayout> = {
 
 export default meta;
 
-type Story = StoryObj<typeof DGlobalLayout>;
+type Story = StoryObj<typeof DSidebarLayout>;
 
 export const Default: Story = {
   args: {

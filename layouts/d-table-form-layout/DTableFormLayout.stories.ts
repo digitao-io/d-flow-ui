@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/vue3";
-import { DDefaultPageLayout } from ".";
+import { DTableFormLayout } from ".";
 
-const meta: Meta<typeof DDefaultPageLayout> = {
-  title: "Components/DDefaultPageLayout",
-  component: DDefaultPageLayout,
+const meta: Meta<typeof DTableFormLayout> = {
+  title: "Components/DTableFormLayout",
+  component: DTableFormLayout,
   render: (args) => ({
-    components: { DDefaultPageLayout },
+    components: { DTableFormLayout },
     setup() {
       return {
         args,
@@ -13,7 +13,7 @@ const meta: Meta<typeof DDefaultPageLayout> = {
     },
     template: `
       <div>
-        <d-default-page-layout
+        <d-table-from-layout
           v-bind="args"
         />
       </div>
@@ -23,7 +23,7 @@ const meta: Meta<typeof DDefaultPageLayout> = {
 
 export default meta;
 
-type Story = StoryObj<typeof DDefaultPageLayout>;
+type Story = StoryObj<typeof DTableFormLayout>;
 
 export const Default: Story = {
   args: {

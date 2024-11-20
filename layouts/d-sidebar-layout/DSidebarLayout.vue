@@ -1,10 +1,10 @@
 <template>
   <div
-    class="d-global-layout"
+    class="d-sidebar-layout"
     :style="{'--menu_column_width': props.menuColumnWidth }"
   >
     <div
-      class="d-global-layout__menu"
+      class="d-sidebar-layout__menu"
     >
       <slot name="menu" />
     </div>
@@ -19,7 +19,7 @@ const props = defineProps<{
 </script>
 
 <style lang="scss" scoped>
-.d-global-layout {
+.d-sidebar-layout {
   display: grid;
   grid-template-columns: var(--menu_column_width) 1fr;
   min-height: 100vh;

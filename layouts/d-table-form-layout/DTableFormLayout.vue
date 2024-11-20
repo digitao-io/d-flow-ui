@@ -1,12 +1,12 @@
 <template>
   <div
-    class="d-default-page-layout"
+    class="d-table-form-layout"
     :style="{ '--table_column_width': props.tableColumnWidth, '--form_column_width': props.formColumnWidth }"
   >
-    <div class="d-default-page-layout__center">
+    <div class="d-table-form-layout__center">
       <slot name="center" />
     </div>
-    <div class="d-default-page-layout__right">
+    <div class="d-table-form-layout__right">
       <slot name="right" />
     </div>
   </div>
@@ -20,7 +20,7 @@ const props = defineProps<{
 </script>
 
 <style lang="scss" scoped>
-.d-default-page-layout {
+.d-table-form-layout {
   display: grid;
   grid-template-columns: var(--table_column_width) var(--form_column_width);
   min-height: 100vh;
