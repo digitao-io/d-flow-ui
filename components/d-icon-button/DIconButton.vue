@@ -16,8 +16,10 @@
   @include tokens.typography-text;
   border-radius: 50%;
   border: none;
+  color: tokens.$color-neutral-b;
   background-color: tokens.$color-flavor2l;
   cursor: pointer;
+
   &:active {
     transform: translateY(1px);
   }

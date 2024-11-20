@@ -1,13 +1,16 @@
 <template>
   <div
     class="d-table-form-layout"
-    :style="{ '--table_column_width': props.tableColumnWidth, '--form_column_width': props.formColumnWidth }"
+    :style="{
+      '--table-column-width': props.tableColumnWidth,
+      '--form-column-width': props.formColumnWidth,
+    }"
   >
-    <div class="d-table-form-layout__center">
-      <slot name="center" />
+    <div class="d-table-form-layout__table">
+      <slot name="table" />
     </div>
-    <div class="d-table-form-layout__right">
-      <slot name="right" />
+    <div class="d-table-form-layout__form">
+      <slot name="form" />
     </div>
   </div>
 </template>
@@ -22,7 +25,7 @@ const props = defineProps<{
 <style lang="scss" scoped>
 .d-table-form-layout {
   display: grid;
-  grid-template-columns: var(--table_column_width) var(--form_column_width);
+  grid-template-columns: var(--table-column-width) var(--form-column-width);
   min-height: 100vh;
 }
 </style>

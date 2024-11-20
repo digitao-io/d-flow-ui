@@ -1,14 +1,16 @@
 <template>
   <div
     class="d-sidebar-layout"
-    :style="{'--menu_column_width': props.menuColumnWidth }"
+    :style="{
+      '--menu-column-width': props.menuColumnWidth
+    }"
   >
-    <div
-      class="d-sidebar-layout__menu"
-    >
+    <div class="d-sidebar-layout__menu">
       <slot name="menu" />
     </div>
-    <slot name="content" />
+    <div class="d-sidebar-layout__content">
+      <slot name="content" />
+    </div>
   </div>
 </template>
 
@@ -21,12 +23,11 @@ const props = defineProps<{
 <style lang="scss" scoped>
 .d-sidebar-layout {
   display: grid;
-  grid-template-columns: var(--menu_column_width) 1fr;
+  grid-template-columns: var(--menu-column-width) 1fr;
   min-height: 100vh;
 
   &__menu {
     background-color: tokens.$color-flavor2l-t2;
   }
 }
-
 </style>

@@ -1,36 +1,33 @@
 <template>
-  <div
-    class="d-table"
-  >
-    <table>
-      <thead>
-        <tr>
-          <th
-            v-for="column in props.columns"
-            :key="column.label"
-          >
-            {{ column.label }}
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr
-          v-for="(row, rowIndex) in data"
-          :key="rowIndex"
-          :class="{ 'd-table__selected-row': selectedRowIndex === rowIndex }"
-          @click="handleRowClick(row, rowIndex)"
+  <table class="d-table">
+    <thead>
+      <tr>
+        <th
+          v-for="column in props.columns"
+          :key="column.label"
+          class="padding-space"
         >
-          <td
-            v-for="column in props.columns"
-            :key="column.name"
-            class="padding-space"
-          >
-            {{ row[column.name] }}
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+          {{ column.label }}
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        v-for="(row, rowIndex) in data"
+        :key="rowIndex"
+        :class="{ 'd-table__selected-row': selectedRowIndex === rowIndex }"
+        @click="handleRowClick(row, rowIndex)"
+      >
+        <td
+          v-for="column in props.columns"
+          :key="column.name"
+          class="padding-space"
+        >
+          {{ row[column.name] }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </template>
 
 <script setup lang="ts">
@@ -65,10 +62,6 @@ function handleRowClick(row: Record<string, string | number | boolean | null>, r
 </script>
 
 <style lang="scss" scoped>
-.d-table {
-  height: 100vh;
-}
-
 table {
   border-collapse: collapse;
 }
@@ -94,7 +87,8 @@ tr {
 }
 
 .padding-space {
-  padding-left: tokens.$space-s;
-  padding-right: tokens.$space-s;
+  padding-left: tokens.$space-m;
+  padding-right: tokens.$space-m;
+  text-align: left;
 }
 </style>

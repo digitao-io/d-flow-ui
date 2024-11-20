@@ -4,6 +4,9 @@ import { DSidebarLayout } from ".";
 const meta: Meta<typeof DSidebarLayout> = {
   title: "Components/DSidebarLayout",
   component: DSidebarLayout,
+  parameters: {
+    layout: "fullscreen",
+  },
   render: (args) => ({
     components: { DSidebarLayout },
     setup() {
@@ -13,9 +16,18 @@ const meta: Meta<typeof DSidebarLayout> = {
     },
     template: `
       <div>
-        <d-sidebar-layout
-          v-bind="args"
-        />
+        <d-sidebar-layout v-bind="args">
+          <template #menu>
+            <div style="background-color:cadetblue;">
+              This is menu slot
+            </div>
+          </template>
+          <template #content>
+            <div style="min-height:100vh; background-color:tomato;">
+              This is content slot
+            </div>
+          </template>
+        </d-sidebar-layout>
       </div>
     `,
   }),

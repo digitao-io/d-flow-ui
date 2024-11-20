@@ -4,6 +4,9 @@ import { DTableFormLayout } from ".";
 const meta: Meta<typeof DTableFormLayout> = {
   title: "Components/DTableFormLayout",
   component: DTableFormLayout,
+  parameters: {
+    layout: "fullscreen",
+  },
   render: (args) => ({
     components: { DTableFormLayout },
     setup() {
@@ -13,9 +16,18 @@ const meta: Meta<typeof DTableFormLayout> = {
     },
     template: `
       <div>
-        <d-table-from-layout
-          v-bind="args"
-        />
+        <d-table-form-layout v-bind="args">
+          <template #table>
+            <div style="min-height:100vh; background-color:lightgrey;">
+              This is table column
+            </div>
+          </template>
+          <template #form>
+            <div style="min-height:100vh; background-color:tomato;">
+              This is form column
+            </div>
+          </template>
+        </d-table-form-layout>
       </div>
     `,
   }),

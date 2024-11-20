@@ -47,6 +47,7 @@ const props = defineProps<{
 
 <style lang="scss" scoped>
 .d-data-list {
+  color: tokens.$color-neutral-b;
 
   &__item {
     margin-bottom: tokens.$space-m;
@@ -58,7 +59,8 @@ const props = defineProps<{
 
   &__thumbnail {
     display: block;
-    max-width: 360px;
+    max-width: 100%;
+    max-height: 360px;
   }
 
   &__value {

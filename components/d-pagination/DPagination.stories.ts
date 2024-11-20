@@ -14,13 +14,13 @@ const meta: Meta<typeof DPagination> = {
       };
     },
     template: `
-    <div>
-      <d-pagination
-        v-bind="args"
-        @click="onClick"
-      />
-    </div>
-  `,
+      <div>
+        <d-pagination
+          v-bind="args"
+          @click="onClick"
+        />
+      </div>
+    `,
   }),
 };
 
