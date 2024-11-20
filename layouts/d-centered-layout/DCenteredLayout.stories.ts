@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/vue3";
 import { DCenteredLayout } from ".";
 
 const meta: Meta<typeof DCenteredLayout> = {
-  title: "layouts/DCenteredLayout",
+  title: "Layouts/DCenteredLayout",
   component: DCenteredLayout,
   parameters: {
     layout: "fullscreen",
