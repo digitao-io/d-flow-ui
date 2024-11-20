@@ -1,8 +1,8 @@
 <template>
-  <div
-    class="d-centered-layout"
-  >
-    <slot name="display_name" />
+  <div class="d-centered-layout">
+    <div class="d-centered-layout__content">
+      <slot name="content" />
+    </div>
   </div>
 </template>
 
@@ -11,5 +11,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  min-height: 100vh;
 }
 </style>

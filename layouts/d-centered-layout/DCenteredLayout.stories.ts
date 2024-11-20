@@ -4,6 +4,9 @@ import { DCenteredLayout } from ".";
 const meta: Meta<typeof DCenteredLayout> = {
   title: "layouts/DCenteredLayout",
   component: DCenteredLayout,
+  parameters: {
+    layout: "fullscreen",
+  },
   render: (args) => ({
     components: { DCenteredLayout },
     setup() {
@@ -14,8 +17,8 @@ const meta: Meta<typeof DCenteredLayout> = {
     template: `
       <div>
         <d-centered-layout v-bind="args">
-          <template #display_name>
-            <div style="background-color:cadetblue; height: 500px; width: 300px;">
+          <template #content>
+            <div style="background-color:tomato; height:300px; width:300px;">
               Center
             </div>
           </template>
