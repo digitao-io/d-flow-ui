@@ -1,3 +1,4 @@
+import path from "node:path";
 import { mergeConfig } from "vite";
 import type { StorybookConfig } from "@storybook/vue3-vite";
 
@@ -15,12 +16,18 @@ const config: StorybookConfig = {
       css: {
         preprocessorOptions: {
           scss: {
+            api: "modern-compiler",
             additionalData: `
-              @use "./styles/_tokens.scss";
+              @use "@/styles/_tokens.scss";
             `,
           },
         },
       },
+      resolve: {
+        alias: {
+          "@": path.join(__dirname, ".."),
+        },
+      }
     });
   },
 };
