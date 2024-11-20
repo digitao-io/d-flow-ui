@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/vue3";
 import { DSidebarLayout } from ".";
 
 const meta: Meta<typeof DSidebarLayout> = {
-  title: "Components/DSidebarLayout",
+  title: "layouts/DSidebarLayout",
   component: DSidebarLayout,
   parameters: {
     layout: "fullscreen",

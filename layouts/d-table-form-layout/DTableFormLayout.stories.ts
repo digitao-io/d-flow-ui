@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/vue3";
 import { DTableFormLayout } from ".";
 
 const meta: Meta<typeof DTableFormLayout> = {
-  title: "Components/DTableFormLayout",
+  title: "layouts/DTableFormLayout",
   component: DTableFormLayout,
   parameters: {
     layout: "fullscreen",
