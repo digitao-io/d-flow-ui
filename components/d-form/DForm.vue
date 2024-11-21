@@ -18,9 +18,8 @@ const props = defineProps<{
 }>();
 
 const value = computed(() => {
-  const errorMessage: Record<string, string> = {};
+  const errorMessage: Record<string, string> = {};
   for (const key in props.values) {
-    console.log(`${key}:`, props.values[key]);
     const validate = ajv.compile(props.validation[key].schema);
     const valid = validate(props.values[key]);
     errorMessage[key] = valid ? "" : props.validation[key].errorMessage;
