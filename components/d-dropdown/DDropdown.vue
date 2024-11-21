@@ -118,7 +118,7 @@ function toggleDropdown() {
   }
 
   &__container {
-    display: inline-flex;
+    display: flex;
     align-items: center;
     position: relative;
   }

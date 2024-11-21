@@ -1,24 +1,30 @@
+import { ref } from "vue";
 import type { Meta, StoryObj } from "@storybook/vue3";
-import { action } from "@storybook/addon-actions";
 import { DInput } from ".";
 
 const meta: Meta<typeof DInput> = {
   title: "Components/DInput",
 
-  component: DInput,
+  parameters: {
+    backgrounds: {
+      default: "Warm",
+    },
+  },
+
   render: (args) => ({
     components: { DInput },
     setup() {
+      const value = ref<string>("");
       return {
         args,
-        onClick: action("on-click"),
+        value,
       };
     },
     template: `
       <div>
         <d-input
           v-bind="args"
-          @click="onClick"
+          v-model="value"
         />
       </div>
     `,
@@ -31,7 +37,8 @@ type Story = StoryObj<typeof DInput>;
 
 export const Default: Story = {
   args: {
-    label: "keyword",
-    errorMessage: "input keyword please!",
+    label: "Keyword",
+    placeholder: "Search something",
+    errorMessage: "Please input a valid keyword!",
   },
 };

@@ -4,9 +4,10 @@
       {{ props.label }}
     </span>
     <input
+      v-model="model"
       class="d-input__input"
       type="text"
-      placeholder="bitte geben Sie Text ein"
+      :placeholder="props.placeholder"
     >
     <small
       class="d-input__error-message"
@@ -19,8 +20,11 @@
 <script setup lang="ts">
 const props = defineProps<{
   label: string;
-  errorMessage: string;
+  placeholder?: string;
+  errorMessage?: string;
 }>();
+
+const model = defineModel<string>();
 </script>
 
 <style lang="scss" scoped>

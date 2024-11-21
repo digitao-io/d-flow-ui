@@ -5,7 +5,13 @@ import { DDropdown } from ".";
 
 const meta: Meta<typeof DDropdown> = {
   title: "Components/DDropdown",
-  component: DDropdown,
+
+  parameters: {
+    backgrounds: {
+      default: "Warm",
+    },
+  },
+
   render: (args) => ({
     components: { DDropdown },
     setup() {
@@ -22,7 +28,6 @@ const meta: Meta<typeof DDropdown> = {
           v-model="value"
           v-bind="args"
         />
-        <p>Selected value: {{ value }}</p>
       </div>
     `,
   }),
