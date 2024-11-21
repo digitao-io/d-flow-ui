@@ -1,0 +1,107 @@
+<template>
+  <div class="d-password-input">
+    <span class="d-password-input__label">
+      {{ props.label }}
+    </span>
+    <input
+      v-model="password"
+      class="d-password-input__input"
+      :type="showPassword ? 'text' : 'password'"
+      :placeholder="props.placeholder"
+    >
+    <button
+      class="d-password-input__button"
+      @click="togglePassword"
+    >
+      <font-awesome-icon
+        v-if="!showPassword"
+        :icon="faEye"
+      />
+      <font-awesome-icon
+        v-else
+        :icon="faEyeSlash"
+      />
+    </button>
+    <small
+      class="d-password-input__error-message"
+    >
+      {{ props.errorMessage }}
+    </small>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { ref } from "vue";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+
+const props = defineProps<{
+  label: string;
+  placeholder: string;
+  errorMessage: string;
+}>();
+
+const showPassword = ref<boolean>(false);
+const password = ref<string>("");
+
+function togglePassword() {
+  showPassword.value = !showPassword.value;
+}
+
+</script>
+
+<style lang="scss" scoped>
+.d-password-input {
+  &__label {
+    display: block;
+    color: tokens.$color-flavor1;
+    @include tokens.typography-text-s--bold;
+  }
+
+  &__input {
+    height: tokens.$input-size;
+    padding-left: tokens.$space-s;
+    padding-right: tokens.$space-s;
+    border: none;
+    border-bottom: 2px solid tokens.$color-flavor1;
+    @include tokens.round-edged-block;
+    @include tokens.typography-text--medium;
+    background-color: tokens.$color-flavor1l-t1;
+
+    &::-ms-reveal,
+    &::-ms-clear {
+      display: none;
+    }
+
+    &::placeholder {
+      color: tokens.$color-neutral-g;
+    }
+
+    &:focus,
+    &:active {
+      outline: none;
+      color: tokens.$color-neutral-b;
+      border-bottom-color: tokens.$color-flavor1;
+      background-color: tokens.$color-flavor1l;
+    }
+  }
+
+  &__button {
+    @include tokens.round-edged-block;
+    @include tokens.typography-text--medium;
+    border: none;
+    height: tokens.$input-size;
+    width: tokens.$input-size;
+    background-color: tokens.$color-flavor1;
+    color: white;
+    cursor: pointer;
+  }
+
+  &__error-message {
+    display: block;
+    color: tokens.$color-error;
+    min-height: 24px;
+    @include tokens.typography-text-s;
+  }
+}
+</style>
