@@ -21,11 +21,11 @@ const meta: Meta<typeof DForm> = {
 
       const formValidation = {
         username: {
-          schema: { type: "string", min: 1 },
+          schema: { type: "string", minLength: 1 },
           errorMessage: "username is error",
         },
         password: {
-          schema: { type: "string", min: 1 },
+          schema: { type: "string", minLength: 1 },
           errorMessage: "password is error",
         },
       };
@@ -38,11 +38,9 @@ const meta: Meta<typeof DForm> = {
     },
     template: `
       <div>
-        <d-form :values="formValues" :validation="formValidation">
-          <template>
-            <d-input v-model="formValues.username" label="me input"/>
-            <d-password-input v-model="formValues.password" label="password" />
-          </template>
+        <d-form v-slot="slotProps" :values="formValues" :validation="formValidation">
+            <d-input v-model="formValues.username" label="me input" :error-message="slotProps.errorMessage.username" />
+            <d-password-input v-model="formValues.password" label="password" :error-message="slotProps.errorMessage.password" />
         </d-form>
       </div>
     `,
