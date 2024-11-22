@@ -40,6 +40,7 @@ const model = defineModel<string>();
   padding-right: tokens.$space-s;
   border: none;
   border-bottom: 2px solid tokens.$color-flavor1;
+  width: 100%;
   @include tokens.round-edged-block;
   @include tokens.typography-text--medium;
   background-color: tokens.$color-flavor1l-t1;

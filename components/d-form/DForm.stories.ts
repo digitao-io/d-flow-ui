@@ -1,32 +1,41 @@
-import type { Meta, StoryObj } from "@storybook/vue3";
-import { DForm } from ".";
 import { ref } from "vue";
+import type { Meta, StoryObj } from "@storybook/vue3";
+import { action } from "@storybook/addon-actions";
+import { DForm } from ".";
 import { DInput } from "../../components/d-input";
 import { DPasswordInput } from "../../components/d-password-input";
+import { DButton } from "../../components/d-button";
 
 const meta: Meta<typeof DForm> = {
   title: "Components/DForm",
+
+  parameters: {
+    backgrounds: {
+      default: "Warm",
+    },
+  },
 
   render: (args) => ({
     components: {
       DForm,
       DInput,
       DPasswordInput,
+      DButton,
     },
     setup() {
       const formValues = ref<{ username: string; password: string }>({
-        username: "username",
-        password: "noPassword",
+        username: "",
+        password: "",
       });
 
       const formValidation = {
         username: {
           schema: { type: "string", minLength: 1 },
-          errorMessage: "username is error",
+          errorMessage: "Username cannot be empty",
         },
         password: {
           schema: { type: "string", minLength: 1 },
-          errorMessage: "password is error",
+          errorMessage: "Password cannot be empty",
         },
       };
 
@@ -34,13 +43,34 @@ const meta: Meta<typeof DForm> = {
         args,
         formValues,
         formValidation,
+        onSubmit: action("on-submit"),
       };
     },
     template: `
       <div>
-        <d-form v-slot="slotProps" :values="formValues" :validation="formValidation">
-            <d-input v-model="formValues.username" label="me input" :error-message="slotProps.errorMessage.username" />
-            <d-password-input v-model="formValues.password" label="password" :error-message="slotProps.errorMessage.password" />
+        <d-form
+          style="width:400px;"
+          v-slot="{ errorMessage, validate, submit }"
+          :values="formValues"
+          :validation="formValidation"
+          @submit="onSubmit"
+        >
+          <d-input
+            v-model="formValues.username"
+            label="Username"
+            :error-message="errorMessage.username"
+            @update:modelValue="validate('username')"
+          />
+          <d-password-input
+            v-model="formValues.password"
+            label="Password"
+            :error-message="errorMessage.password"
+            @update:modelValue="validate('password')"
+          />
+
+          <d-button @click="submit">
+            Login
+          </d-button>
         </d-form>
       </div>
     `,

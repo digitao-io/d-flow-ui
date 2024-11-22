@@ -121,9 +121,11 @@ function toggleDropdown() {
     display: flex;
     align-items: center;
     position: relative;
+    width: 100%;
   }
 
   &__input {
+    flex: 1 1;
     height: tokens.$input-size;
     padding-left: tokens.$space-s;
     padding-right: tokens.$space-s;

@@ -21,7 +21,7 @@ const meta: Meta<typeof DPasswordInput> = {
       };
     },
     template: `
-      <div>
+      <div style="width:400px;">
         <d-password-input
           v-bind="args"
           v-model="value"

@@ -21,7 +21,7 @@ const meta: Meta<typeof DInput> = {
       };
     },
     template: `
-      <div>
+      <div style="width:400px;">
         <d-input
           v-bind="args"
           v-model="value"

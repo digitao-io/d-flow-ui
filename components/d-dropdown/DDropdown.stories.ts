@@ -23,7 +23,7 @@ const meta: Meta<typeof DDropdown> = {
       };
     },
     template: `
-      <div>
+      <div style="width:400px;">
         <d-dropdown
           v-model="value"
           v-bind="args"

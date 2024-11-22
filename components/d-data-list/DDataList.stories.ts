@@ -18,7 +18,7 @@ const meta: Meta<typeof DDataList> = {
       };
     },
     template: `
-      <div>
+      <div style="width:400px;">
         <d-data-list
           v-bind="args"
         />

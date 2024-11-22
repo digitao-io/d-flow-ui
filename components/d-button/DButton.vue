@@ -5,6 +5,7 @@
       'd-button--primary': !props.secondary,
       'd-button--secondary': props.secondary,
     }"
+    :disabled="disabled"
   >
     <slot />
   </button>
@@ -12,6 +13,10 @@
 
 <script setup lang="ts">
 const props = defineProps({
+  disabled: {
+    type: Boolean,
+    default: false,
+  },
   secondary: {
     type: Boolean,
     default: false,
@@ -71,5 +76,4 @@ const props = defineProps({
     cursor: not-allowed;
   }
 }
-
 </style>
