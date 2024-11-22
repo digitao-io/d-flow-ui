@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import Ajv from "ajv";
+import { Ajv } from "ajv";
 import { computed } from "vue";
 
 const ajv = new Ajv();
