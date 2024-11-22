@@ -21,12 +21,12 @@ const meta: Meta<typeof DPasswordInput> = {
       };
     },
     template: `
-    <div>
-      <d-password-input
-        v-bind="args"
-        v-model="value"
-      />
-    </div>
+      <div>
+        <d-password-input
+          v-bind="args"
+          v-model="value"
+        />
+      </div>
     `,
   }),
 };
