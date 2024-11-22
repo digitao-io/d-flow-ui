@@ -23,11 +23,6 @@ type FormValidationDefinition = {
   errorMessage: string;
 };
 
-type FormValidationResult = {
-  dirty: boolean;
-  valid: boolean;
-};
-
 const props = defineProps<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   values: Record<string, any>;
@@ -39,50 +34,38 @@ const emit = defineEmits<{
   submit: [Record<string, any>];
 }>();
 
-const validationResult = ref<Record<string, FormValidationResult>>(
+const validationResult = ref<Record<string, boolean>>(
   Object.keys(props.values).reduce((obj, key) => {
-    obj[key] = { dirty: false, valid: true };
+    obj[key] = true;
     return obj;
-  }, {} as Record<string, FormValidationResult>),
+  }, {} as Record<string, boolean>),
 );
 
 const errorMessage = computed<Record<string, string>>(() =>
   Object.keys(props.values).reduce((obj, key) => {
-    obj[key] = (validationResult.value[key].dirty && !validationResult.value[key].valid)
+    obj[key] = !validationResult.value[key]
       ? props.validation[key].errorMessage
       : "";
     return obj;
   }, {} as Record<string, string>),
 );
 
-function validate(dirtyField?: string): boolean {
+function validate(key: string) {
+  validationResult.value[key] = ajv.validate(props.validation[key].schema, props.values[key]);
+}
+
+function submit() {
   let fullyValid: boolean = true;
 
-  if (dirtyField) {
-    validationResult.value[dirtyField].dirty = true;
-  }
-
   for (const key in props.values) {
-    if (!validationResult.value[key].dirty) {
-      continue;
-    }
-
     const valid = ajv.validate(props.validation[key].schema, props.values[key]);
-    validationResult.value[key].valid = valid;
+    validationResult.value[key] = valid;
     if (!valid) {
       fullyValid = false;
     }
   }
 
-  return fullyValid;
-}
-
-function submit() {
-  Object.keys(validationResult.value).forEach((key) => {
-    validationResult.value[key].dirty = true;
-  });
-
-  if (!validate()) {
+  if (!fullyValid) {
     return;
   }
 
