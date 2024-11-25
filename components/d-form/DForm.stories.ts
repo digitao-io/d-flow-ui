@@ -50,27 +50,30 @@ const meta: Meta<typeof DForm> = {
       <div>
         <d-form
           style="width:400px;"
-          v-slot="{ errorMessage, validate, submit }"
           :values="formValues"
           :validation="formValidation"
           @submit="onSubmit"
         >
-          <d-input
-            v-model="formValues.username"
-            label="Username"
-            :error-message="errorMessage.username"
-            @update="validate('username')"
-          />
-          <d-password-input
-            v-model="formValues.password"
-            label="Password"
-            :error-message="errorMessage.password"
-            @update="validate('password')"
-          />
+          <template #inputs="{ errorMessage, validate }">
+            <d-input
+              v-model="formValues.username"
+              label="Username"
+              :error-message="errorMessage.username"
+              @update="validate('username')"
+            />
+            <d-password-input
+              v-model="formValues.password"
+              label="Password"
+              :error-message="errorMessage.password"
+              @update="validate('password')"
+            />
+          </template>
 
-          <d-button @click="submit">
-            Login
-          </d-button>
+          <template #actions="{ submit }">
+            <d-button @click="submit">
+              Login
+            </d-button>
+          </template>
         </d-form>
       </div>
     `,

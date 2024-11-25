@@ -3,11 +3,23 @@
     class="d-form"
     @submit.prevent
   >
-    <slot
-      :error-message="errorMessage"
-      :validate="validate"
-      :submit="submit"
-    />
+    <div class="d-form__inputs">
+      <slot
+        name="inputs"
+        :error-message="errorMessage"
+        :validate="validate"
+        :submit="submit"
+      />
+    </div>
+
+    <div class="d-form__actions">
+      <slot
+        name="actions"
+        :error-message="errorMessage"
+        :validate="validate"
+        :submit="submit"
+      />
+    </div>
   </form>
 </template>
 
@@ -72,3 +84,11 @@ function submit() {
   emit("submit", props.values);
 }
 </script>
+
+<style lang="scss" scoped>
+.d-form {
+  &__inputs {
+    margin-bottom: tokens.$space-m;
+  }
+}
+</style>
