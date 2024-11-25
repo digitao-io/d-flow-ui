@@ -49,7 +49,7 @@
 <script setup lang="ts">
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { faAngleDown, faAngleUp } from "@fortawesome/free-solid-svg-icons";
-import { computed, nextTick, ref } from "vue";
+import { computed, nextTick, ref, watch } from "vue";
 
 interface OptionDefinition {
   label: string;
@@ -62,6 +62,10 @@ const props = defineProps<{
   placeholder: string;
 }>();
 
+const emit = defineEmits<{
+  "update": [string];
+}>();
+
 const model = defineModel<string>();
 
 const showDropdown = ref<boolean>(false);
@@ -71,6 +75,13 @@ const filteredOptions = computed(() =>
   props.options.filter((option) => option.label.toLocaleLowerCase().startsWith(searchQuery.value.toLocaleLowerCase())));
 const selectedLabel = computed(() =>
   props.options.find((option) => option.value === model.value)?.label ?? "");
+
+watch(() => model.value, (value) => {
+  if (value === undefined) {
+    return;
+  }
+  emit("update", value);
+});
 
 async function handleInput(event: Event) {
   const newValue = (event.target! as HTMLInputElement).value;

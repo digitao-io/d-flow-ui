@@ -1,5 +1,6 @@
 import { ref } from "vue";
 import type { Meta, StoryObj } from "@storybook/vue3";
+import { action } from "@storybook/addon-actions";
 import { DInput } from ".";
 
 const meta: Meta<typeof DInput> = {
@@ -18,6 +19,7 @@ const meta: Meta<typeof DInput> = {
       return {
         args,
         value,
+        onUpdate: action("on-update"),
       };
     },
     template: `
@@ -25,6 +27,7 @@ const meta: Meta<typeof DInput> = {
         <d-input
           v-bind="args"
           v-model="value"
+          @update="onUpdate"
         />
       </div>
     `,

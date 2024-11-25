@@ -9,6 +9,7 @@
         class="d-password-input__input"
         :type="showPassword ? 'text' : 'password'"
         :placeholder="props.placeholder"
+        @blur="handleBlur"
       >
       <button
         class="d-password-input__button"
@@ -43,9 +44,20 @@ const props = defineProps<{
   errorMessage?: string;
 }>();
 
+const emit = defineEmits<{
+  update: [string];
+}>();
+
 const model = defineModel<string>();
 
 const showPassword = ref<boolean>(false);
+
+function handleBlur() {
+  if (model.value === undefined) {
+    return;
+  }
+  emit("update", model.value);
+}
 
 function togglePassword() {
   showPassword.value = !showPassword.value;

@@ -8,6 +8,7 @@
       class="d-input__input"
       type="text"
       :placeholder="props.placeholder"
+      @blur="handleBlur"
     >
     <small
       class="d-input__error-message"
@@ -24,7 +25,18 @@ const props = defineProps<{
   errorMessage?: string;
 }>();
 
+const emit = defineEmits<{
+  update: [string];
+}>();
+
 const model = defineModel<string>();
+
+function handleBlur() {
+  if (model.value === undefined) {
+    return;
+  }
+  emit("update", model.value);
+}
 </script>
 
 <style lang="scss" scoped>

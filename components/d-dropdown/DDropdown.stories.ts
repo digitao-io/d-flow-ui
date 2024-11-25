@@ -19,7 +19,7 @@ const meta: Meta<typeof DDropdown> = {
       return {
         value,
         args,
-        onClick: action("on-click"),
+        onUpdate: action("on-update"),
       };
     },
     template: `
@@ -27,6 +27,7 @@ const meta: Meta<typeof DDropdown> = {
         <d-dropdown
           v-model="value"
           v-bind="args"
+          @update="onUpdate"
         />
       </div>
     `,

@@ -1,6 +1,7 @@
 import { ref } from "vue";
 import type { Meta, StoryObj } from "@storybook/vue3";
 import { DPasswordInput } from ".";
+import { action } from "@storybook/addon-actions";
 
 const meta: Meta<typeof DPasswordInput> = {
   title: "Components/DPasswordInput",
@@ -18,6 +19,7 @@ const meta: Meta<typeof DPasswordInput> = {
       return {
         args,
         value,
+        onUpdate: action("on-update"),
       };
     },
     template: `
@@ -25,6 +27,7 @@ const meta: Meta<typeof DPasswordInput> = {
         <d-password-input
           v-bind="args"
           v-model="value"
+          @update="onUpdate"
         />
       </div>
     `,
