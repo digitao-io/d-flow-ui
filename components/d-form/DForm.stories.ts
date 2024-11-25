@@ -59,13 +59,13 @@ const meta: Meta<typeof DForm> = {
             v-model="formValues.username"
             label="Username"
             :error-message="errorMessage.username"
-            @update:modelValue="validate('username')"
+            @update="validate('username')"
           />
           <d-password-input
             v-model="formValues.password"
             label="Password"
             :error-message="errorMessage.password"
-            @update:modelValue="validate('password')"
+            @update="validate('password')"
           />
 
           <d-button @click="submit">
