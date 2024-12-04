@@ -10,11 +10,9 @@
       :placeholder="props.placeholder"
       @blur="handleBlur"
     >
-    <small
-      class="d-input__error-message"
-    >
+    <span class="d-input__error-message">
       {{ props.errorMessage }}
-    </small>
+    </span>
   </label>
 </template>
 

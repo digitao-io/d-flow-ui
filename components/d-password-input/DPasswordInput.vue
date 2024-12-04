@@ -13,6 +13,7 @@
       >
       <button
         class="d-password-input__button"
+        type="button"
         @click="togglePassword"
       >
         <font-awesome-icon
@@ -25,11 +26,9 @@
         />
       </button>
     </div>
-    <small
-      class="d-password-input__error-message"
-    >
+    <span class="d-password-input__error-message">
       {{ props.errorMessage }}
-    </small>
+    </span>
   </label>
 </template>
 

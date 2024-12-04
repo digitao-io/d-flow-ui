@@ -14,6 +14,7 @@
       >
       <button
         class="d-dropdown__button"
+        type="button"
         @click="toggleDropdown"
       >
         <font-awesome-icon
