@@ -171,6 +171,9 @@ function changeSorting(column: DTableColumnDefinition) {
   &__body-row:nth-child(2n) &__body-cell {
     background-color: tokens.$color-neutral-g-t2;
   }
+  &__body-row:nth-child(2n + 1) &__body-cell {
+    background-color: tokens.$color-neutral-g-t3;
+  }
 
   &__body-row.d-table__body-row--selected &__body-cell {
     background-color: tokens.$color-flavor1l;
