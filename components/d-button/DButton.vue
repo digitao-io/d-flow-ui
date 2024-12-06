@@ -31,7 +31,7 @@ const props = defineProps({
   justify-content: center;
   margin: 0;
   border: none;
-  padding: 0 tokens.$space-m;
+  padding: 2px tokens.$space-m 0 tokens.$space-m;
   height: tokens.$input-size;
   @include tokens.round-edged-block;
 

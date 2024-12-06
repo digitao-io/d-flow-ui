@@ -20,7 +20,7 @@
     <span
       class="d-checkbox__label"
     >
-      <slot />
+      {{ props.label }}
     </span>
   </label>
 </template>
@@ -30,30 +30,40 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { faSquare, faSquareCheck } from "@fortawesome/free-solid-svg-icons";
 
 const model = defineModel<boolean>();
+
+const props = defineProps<{
+  label: string;
+}>();
 </script>
 
 <style lang="scss" scoped>
 .d-checkbox {
-  @include tokens.typography-text-l;
+  @include tokens.typography-text--bold;
+  @include tokens.round-edged-block;
+  display: flex;
+  align-items: center;
+  padding: 0 tokens.$space-s;
+  height: tokens.$input-size;
+  color: tokens.$color-neutral-b;
   cursor: pointer;
 
   &__input {
     display: none;
-    margin: 0 2px;
   }
 
   &__icon {
-    font-size: tokens.$input-size;
-    color: tokens.$color-flavor1-t1;
+    @include tokens.typography-text-l;
+    margin-right: tokens.$space-s;
+    color: tokens.$color-flavor1;
   }
 
-  &:hover &__icon  {
-    color: tokens.$color-flavor1l;
+  &__label {
+    padding-top: 2px;
   }
-}
 
-.d-checkbox__label {
-  margin: 0 2px;
+  &:hover {
+    background-color: tokens.$color-flavor1l-t1;
+  }
 }
 
 </style>

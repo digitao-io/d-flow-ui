@@ -21,8 +21,10 @@ const meta: Meta<typeof DCheckbox> = {
       };
     },
     template: `
-      <d-checkbox v-model="value">
-        {{ args.default }}
+      <d-checkbox
+        v-model="value"
+        :label="args.label"
+      >
       </d-checkbox>
     `,
   }),
@@ -34,6 +36,6 @@ type Story = StoryObj<typeof DCheckbox>;
 
 export const Default: Story = {
   args: {
-    default: "Checkbox Label",
+    label: "Checkbox Label",
   },
 };
