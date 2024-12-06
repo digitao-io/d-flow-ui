@@ -58,7 +58,7 @@ const props = defineProps({
   }
 
   &.d-button--secondary {
-    color: tokens.$color-neutral-b;
+    color: tokens.$color-flavor1-s1;
     background-color: tokens.$color-flavor1l;
 
     &:hover,
