@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from "@storybook/vue3";
-import { action } from "@storybook/addon-actions";
 import { DTable } from ".";
 import { ref } from "vue";
 
@@ -9,17 +8,16 @@ const meta: Meta<typeof DTable> = {
   render: (args) => ({
     components: { DTable },
     setup() {
-      const selectedRowKeyValue = ref<string | number | boolean | null>(null);
+      const selectedRowKey = ref<string | null>(null);
 
-      function getSelectedRowKeyValue(keyValue: string | number | boolean | null) {
-        selectedRowKeyValue.value = keyValue;
+      function onSelectRow(key: string) {
+        selectedRowKey.value = key;
       }
 
       return {
         args,
-        getSelectedRowKeyValue,
-        onClick: action("on-click"),
-        selectedRowKeyValue,
+        selectedRowKey,
+        onSelectRow,
       };
     },
 
@@ -27,8 +25,8 @@ const meta: Meta<typeof DTable> = {
     <div>
       <d-table
         v-bind="args"
-        @row-click="getSelectedRowKeyValue"
-        @click="onClick"
+        :selected-row-key="selectedRowKey"
+        @select-row="onSelectRow"
       />
     </div>
   `,
@@ -47,27 +45,33 @@ export const Default: Story = {
         name: "id",
         label: "ID",
         sortable: true,
-        widthInPercent: "20%",
-        minWidthInPixels: "100px",
+        width: "50px",
         data: "id",
-        titleAlignment: "left",
+        textAlignment: "end",
       },
       {
         key: false,
         name: "name",
         label: "Name",
         sortable: true,
-        widthInPercent: "20%",
-        minWidthInPixels: "100px",
-        data: "id",
-        titleAlignment: "left",
+        width: "minmax(150px, 1fr)",
+        data: "name",
+        textAlignment: "start",
+      },
+      {
+        key: false,
+        name: "description",
+        label: "Description",
+        sortable: true,
+        width: "minmax(450px, 3fr)",
+        data: "description",
+        textAlignment: "start",
       },
     ],
     data: [
-      { id: 1, name: "The King's Avatar" },
-      { id: 2, name: "BLISS" },
-      { id: 3, name: "Under the SummerBlue Sky" },
+      { id: 1, name: "The King's Avatar", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum vestibulum orci massa, vitae viverra libero vulputate eu. Curabitur hendrerit tempus velit, non fringilla sem tempus eget." },
+      { id: 2, name: "BLISS", description: "Phasellus porttitor erat id est cursus dictum. Sed ornare orci vitae pulvinar pellentesque. Integer vel diam a dolor dictum consequat." },
+      { id: 3, name: "Under the SummerBlue Sky", description: "Proin pharetra eget orci ut dictum. Cras eget lacinia tortor. Maecenas nec enim tincidunt, vulputate neque nec, laoreet magna. Etiam imperdiet auctor ex sit amet elementum. Pellentesque varius tortor sit amet urna accumsan elementum." },
     ],
   },
-
 };
