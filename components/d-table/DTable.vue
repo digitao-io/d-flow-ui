@@ -193,11 +193,12 @@ function changeSorting(column: DTableColumnDefinition) {
   }
 
   &__head-cell {
-    @include tokens.typography-text--bold;
+    @include tokens.typography-text-s--bold;
     display: flex;
     align-items: center;
     justify-content: space-between;
     background-color: tokens.$color-flavor2l-t1;
+    text-transform: uppercase;
   }
 
   &__body-cell {
@@ -207,6 +208,11 @@ function changeSorting(column: DTableColumnDefinition) {
 
   &__head-cell:last-child {
     @include tokens.round-edged-block;
+  }
+
+  &__head-text {
+    display: inline-block;
+    padding-top: 2px;
   }
 
   &__head-sorting-icon {

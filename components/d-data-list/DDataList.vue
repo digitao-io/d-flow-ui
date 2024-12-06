@@ -55,6 +55,7 @@ const props = defineProps<{
 
   &__label {
     @include tokens.typography-text-s--bold;
+    text-transform: uppercase;
   }
 
   &__thumbnail {
