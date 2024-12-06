@@ -15,7 +15,17 @@
             '--text-alignment': column.textAlignment,
           }"
         >
-          {{ column.label }}
+          <span class="d-table__head-text">{{ column.label }}</span>
+
+          <font-awesome-icon
+            v-if="column.sortable"
+            class="d-table__head-sorting-icon"
+            :class="{
+              'd-table__head-sorting-icon--active': column.name === props.sorting.name,
+            }"
+            :icon="extractSortIcon(column)!"
+            @click="changeSorting(column)"
+          />
         </th>
       </tr>
     </thead>
@@ -27,7 +37,7 @@
         :class="{
           'd-table__body-row--selected': matchRowKey(extractRowKey(row), props.selectedRowKey),
         }"
-        @click="handleRowClick(row)"
+        @click="selectRow(row)"
       >
         <td
           v-for="column in props.columns"
@@ -46,38 +56,47 @@
 
 <script setup lang="ts">
 import { computed } from "vue";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { faSort, faArrowUpShortWide, faArrowDownWideShort } from "@fortawesome/free-solid-svg-icons";
 
-type RowData = string | number | boolean | null;
-type RowKey = RowData | RowData[];
-type RowDefinition = Record<string, RowData>;
+export type DTableRowValue = string | number | boolean | null;
+export type DTableRowKey = DTableRowValue | DTableRowValue[];
+export type DTableRowData = Record<string, DTableRowValue>;
 
-interface ColumnDefinition {
-  key: boolean;
+export interface DTableColumnDefinition {
   name: string;
   label: string;
+  data: string;
+  key: boolean;
   sortable: boolean;
   width: string;
-  data: string;
   textAlignment: "start" | "center" | "end";
 }
 
+export interface DTableSorting {
+  name: string;
+  order: "asc" | "desc";
+}
+
 const props = defineProps<{
-  columns: ColumnDefinition[];
-  data: RowDefinition[];
-  selectedRowKey: RowData | RowData[];
+  columns: DTableColumnDefinition[];
+  data: DTableRowData[];
+  selectedRowKey: DTableRowKey;
+  sorting: DTableSorting;
 }>();
 
 const emit = defineEmits<{
-  selectRow: [RowData | RowData[]];
+  selectRow: [DTableRowValue | DTableRowValue[]];
+  sortColumn: [DTableSorting];
 }>();
 
 const gridTemplateColumns = computed<string>(() => props.columns.map((column) => column.width).join(" "));
 
-function handleRowClick(row: RowDefinition) {
+function selectRow(row: DTableRowData) {
   emit("selectRow", extractRowKey(row));
 }
 
-function extractRowKey(row: RowDefinition): RowKey {
+function extractRowKey(row: DTableRowData): DTableRowKey {
   const keyArray = props.columns
     .filter((column) => column.key)
     .map((column) => row[column.data]);
@@ -85,8 +104,44 @@ function extractRowKey(row: RowDefinition): RowKey {
   return keyArray.length === 1 ? keyArray[0] : keyArray;
 }
 
-function matchRowKey(key1: RowKey, key2: RowKey): boolean {
+function matchRowKey(key1: DTableRowKey, key2: DTableRowKey): boolean {
   return JSON.stringify(key1) === JSON.stringify(key2);
+}
+
+function extractSortIcon(column: DTableColumnDefinition) {
+  if (!column.sortable) {
+    return null;
+  }
+
+  if (props.sorting.name === column.name) {
+    return props.sorting.order === "asc"
+      ? faArrowUpShortWide
+      : faArrowDownWideShort;
+  }
+  else {
+    return faSort;
+  }
+}
+
+function changeSorting(column: DTableColumnDefinition) {
+  let sorting: DTableSorting;
+
+  if (props.sorting.name !== column.name) {
+    sorting = {
+      name: column.name,
+      order: "asc",
+    };
+  }
+  else {
+    sorting = {
+      name: props.sorting.name,
+      order: props.sorting.order === "asc" ? "desc" : "asc",
+    };
+  }
+
+  console.log(sorting);
+
+  emit("sortColumn", sorting);
 }
 </script>
 
@@ -98,6 +153,7 @@ function matchRowKey(key1: RowKey, key2: RowKey): boolean {
 
   display: grid;
   grid-template-columns: var(--grid-template-columns);
+  gap: 2px;
 
   width: 100%;
 
@@ -131,17 +187,32 @@ function matchRowKey(key1: RowKey, key2: RowKey): boolean {
   &__head-cell,
   &__body-cell {
     padding: tokens.$space-xs tokens.$space-s;
-    text-align: var(--text-alignment);
-    cursor: pointer;
   }
 
   &__head-cell {
     @include tokens.typography-text--bold;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     background-color: tokens.$color-flavor2l-t1;
+  }
+
+  &__body-cell {
+    text-align: var(--text-alignment);
+    cursor: pointer;
   }
 
   &__head-cell:last-child {
     @include tokens.round-edged-block;
+  }
+
+  &__head-sorting-icon {
+    color: tokens.$color-neutral-g;
+    cursor: pointer;
+
+    &--active {
+      color: tokens.$color-neutral-b;
+    }
   }
 }
 </style>

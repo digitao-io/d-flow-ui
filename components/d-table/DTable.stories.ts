@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/vue3";
-import { DTable } from ".";
+import { DTable, DTableRowKey, DTableSorting } from ".";
 import { ref } from "vue";
 
 const meta: Meta<typeof DTable> = {
@@ -8,16 +8,23 @@ const meta: Meta<typeof DTable> = {
   render: (args) => ({
     components: { DTable },
     setup() {
-      const selectedRowKey = ref<string | null>(null);
+      const selectedRowKey = ref<DTableRowKey>(null);
+      const currentSorting = ref<DTableSorting>({ name: "id", order: "asc" });
 
       function onSelectRow(key: string) {
         selectedRowKey.value = key;
       }
 
+      function onSortColumn(sorting: DTableSorting) {
+        currentSorting.value = sorting;
+      }
+
       return {
         args,
         selectedRowKey,
+        currentSorting,
         onSelectRow,
+        onSortColumn,
       };
     },
 
@@ -26,7 +33,9 @@ const meta: Meta<typeof DTable> = {
       <d-table
         v-bind="args"
         :selected-row-key="selectedRowKey"
+        :sorting="currentSorting"
         @select-row="onSelectRow"
+        @sort-column="onSortColumn"
       />
     </div>
   `,
@@ -45,7 +54,7 @@ export const Default: Story = {
         name: "id",
         label: "ID",
         sortable: true,
-        width: "50px",
+        width: "70px",
         data: "id",
         textAlignment: "end",
       },
@@ -62,7 +71,7 @@ export const Default: Story = {
         key: false,
         name: "description",
         label: "Description",
-        sortable: true,
+        sortable: false,
         width: "minmax(450px, 3fr)",
         data: "description",
         textAlignment: "start",

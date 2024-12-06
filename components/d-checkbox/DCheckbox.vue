@@ -65,5 +65,4 @@ const props = defineProps<{
     background-color: tokens.$color-flavor1l-t1;
   }
 }
-
 </style>
