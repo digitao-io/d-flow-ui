@@ -89,6 +89,10 @@ function submit() {
 .d-form {
   &__inputs {
     margin-bottom: tokens.$space-m;
+
+    & > * {
+      margin-bottom: tokens.$space-s;
+    }
   }
 }
 </style>

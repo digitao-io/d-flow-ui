@@ -123,6 +123,8 @@ function toggleDropdown() {
 
 <style lang="scss" scoped>
 .d-dropdown {
+  display: block;
+
   &__label {
     display: block;
     color: tokens.$color-flavor1;

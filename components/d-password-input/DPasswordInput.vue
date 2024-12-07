@@ -26,9 +26,12 @@
         />
       </button>
     </div>
-    <span class="d-password-input__error-message">
+    <div
+      v-if="props.errorMessage"
+      class="d-password-input__error-message"
+    >
       {{ props.errorMessage }}
-    </span>
+    </div>
   </label>
 </template>
 
@@ -65,6 +68,8 @@ function togglePassword() {
 
 <style lang="scss" scoped>
 .d-password-input {
+  display: block;
+
   &__label {
     display: block;
     color: tokens.$color-flavor1;
@@ -118,10 +123,9 @@ function togglePassword() {
   }
 
   &__error-message {
-    display: block;
+    @include tokens.typography-text-s;
     color: tokens.$color-error;
     min-height: 24px;
-    @include tokens.typography-text-s;
   }
 }
 </style>
