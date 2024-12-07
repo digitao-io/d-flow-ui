@@ -40,9 +40,9 @@ const props = defineProps<{
 .d-checkbox {
   @include tokens.typography-text--bold;
   @include tokens.round-edged-block;
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  padding: 0 tokens.$space-s;
+  padding: 0 tokens.$space-m 0 tokens.$space-s;
   height: tokens.$input-size;
   color: tokens.$color-neutral-b;
   cursor: pointer;
