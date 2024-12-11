@@ -2,9 +2,17 @@
   <button
     class="d-icon-button"
   >
-    <slot />
+    <font-awesome-icon :icon="`fa-solid ${props.icon}`" />
   </button>
 </template>
+
+<script setup lang="ts">
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+
+const props = defineProps<{
+  icon: string;
+}>();
+</script>
 
 <style lang="scss" scoped>
 .d-icon-button {
@@ -29,5 +37,4 @@
       background-color: tokens.$color-flavor2l-t1;
   }
 }
-
 </style>

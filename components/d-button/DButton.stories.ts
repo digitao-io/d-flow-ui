@@ -1,6 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/vue3";
 import { action } from "@storybook/addon-actions";
 import { DButton } from ".";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { faPencilAlt } from "@fortawesome/free-solid-svg-icons";
+
+library.add(faPencilAlt);
 
 const meta: Meta<typeof DButton> = {
   title: "Components/DButton",
@@ -37,22 +41,23 @@ export default meta;
 type Story = StoryObj<typeof DButton>;
 
 export const Default: Story = {
-  args: {
-    secondary: false,
-    disabled: false,
-  },
+  args: {},
 };
 
 export const Secondary: Story = {
   args: {
     secondary: true,
-    disabled: false,
   },
 };
 
 export const Disabled: Story = {
   args: {
-    secondary: false,
     disabled: true,
+  },
+};
+
+export const WithIcon: Story = {
+  args: {
+    icon: "fa-pencil-alt",
   },
 };

@@ -1,5 +1,5 @@
+import { ref } from "vue";
 import type { Meta, StoryObj } from "@storybook/vue3";
-import { action } from "@storybook/addon-actions";
 import { DPagination } from ".";
 
 const meta: Meta<typeof DPagination> = {
@@ -8,16 +8,24 @@ const meta: Meta<typeof DPagination> = {
   render: (args) => ({
     components: { DPagination },
     setup() {
+      const currentPage = ref<number>(args.currentPage);
+
+      function onChange(newPageNumber: number) {
+        currentPage.value = newPageNumber;
+      }
+
       return {
         args,
-        onClick: action("on-click"),
+        currentPage,
+        onChange,
       };
     },
     template: `
       <div>
         <d-pagination
-          v-bind="args"
-          @click="onClick"
+          :current-page="currentPage"
+          :total-pages="args.totalPages"
+          @change="onChange"
         />
       </div>
     `,
@@ -31,6 +39,6 @@ type Story = StoryObj<typeof DPagination>;
 export const Default: Story = {
   args: {
     currentPage: 1,
-    totalPage: 10,
+    totalPages: 10,
   },
 };

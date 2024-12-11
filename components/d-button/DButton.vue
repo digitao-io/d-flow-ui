@@ -7,11 +7,20 @@
     }"
     :disabled="disabled"
   >
-    <slot />
+    <font-awesome-icon
+      v-if="props.icon"
+      class="d-button__icon"
+      :icon="`fa-solid ${props.icon}`"
+    />
+    <span class="d-button__label">
+      <slot />
+    </span>
   </button>
 </template>
 
 <script setup lang="ts">
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+
 const props = defineProps({
   disabled: {
     type: Boolean,
@@ -20,6 +29,10 @@ const props = defineProps({
   secondary: {
     type: Boolean,
     default: false,
+  },
+  icon: {
+    type: String,
+    default: "",
   },
 });
 </script>
@@ -31,7 +44,7 @@ const props = defineProps({
   justify-content: center;
   margin: 0;
   border: none;
-  padding: 2px tokens.$space-m 0 tokens.$space-m;
+  padding: 0 tokens.$space-m;
   height: tokens.$input-size;
   @include tokens.round-edged-block;
 
@@ -45,6 +58,14 @@ const props = defineProps({
 
   &:active {
     transform: translateY(1px);
+  }
+
+  &__icon {
+    margin-right: tokens.$space-s;
+  }
+
+  &__label {
+    padding-top: 2px;
   }
 
   &.d-button--primary {

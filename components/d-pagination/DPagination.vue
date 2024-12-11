@@ -3,36 +3,29 @@
     class="d-pagination"
   >
     <d-icon-button
+      icon="fa-angles-left"
       @click="goToFirstPage"
-    >
-      <font-awesome-icon :icon="faAnglesLeft" />
-    </d-icon-button>
+    />
     <d-icon-button
+      icon="fa-angle-left"
       @click="prevPage"
-    >
-      <font-awesome-icon :icon="faAngleLeft" />
-    </d-icon-button>
-    <span
-      class="d-pagination__page"
-    >
-      {{ currentPage }} / {{ props.totalPage }}
+    />
+    <span class="d-pagination__page">
+      {{ props.currentPage }} / {{ props.totalPages }}
     </span>
     <d-icon-button
+      icon="fa-angle-right"
       @click="nextPage"
-    >
-      <font-awesome-icon :icon="faAngleRight" />
-    </d-icon-button>
+    />
     <d-icon-button
+      icon="fa-angles-right"
       @click="goToLastPage"
-    >
-      <font-awesome-icon :icon="faAnglesRight" />
-    </d-icon-button>
+    />
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from "vue";
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { library } from "@fortawesome/fontawesome-svg-core";
 import {
   faAnglesLeft,
   faAngleLeft,
@@ -41,35 +34,40 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { DIconButton } from "../d-icon-button";
 
+library.add(
+  faAnglesLeft,
+  faAngleLeft,
+  faAnglesRight,
+  faAngleRight,
+);
+
 const props = defineProps<{
-  totalPage: number;
   currentPage: number;
+  totalPages: number;
 }>();
 
-const currentPage = ref<number>(props.currentPage);
-
-watch(() => props.currentPage, (newVal: number) => {
-  currentPage.value = newVal;
-});
+const emit = defineEmits<{
+  change: [number];
+}>();
 
 const prevPage = () => {
-  if (currentPage.value > 1) {
-    currentPage.value -= 1;
+  if (props.currentPage > 1) {
+    emit("change", props.currentPage - 1);
   }
 };
 
 const nextPage = () => {
-  if (currentPage.value < props.totalPage) {
-    currentPage.value += 1;
+  if (props.currentPage < props.totalPages) {
+    emit("change", props.currentPage + 1);
   }
 };
 
 const goToFirstPage = () => {
-  currentPage.value = 1;
+  emit("change", 1);
 };
 
 const goToLastPage = () => {
-  currentPage.value = props.totalPage;
+  emit("change", props.totalPages);
 };
 </script>
 
@@ -77,9 +75,13 @@ const goToLastPage = () => {
 .d-pagination {
   display:flex;
   align-items: center;
-  gap: tokens.$space-m
-}
-.d-pagination__page {
-  @include tokens.typography-text--medium;
+  gap: tokens.$space-m;
+
+  &__page {
+    @include tokens.typography-text--medium;
+    width: 8ch;
+    color: tokens.$color-neutral-b;
+    text-align: center;
+  }
 }
 </style>

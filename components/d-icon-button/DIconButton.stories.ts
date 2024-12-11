@@ -1,33 +1,30 @@
 import type { Meta, StoryObj } from "@storybook/vue3";
 import { DIconButton } from ".";
 import { action } from "@storybook/addon-actions";
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { library } from "@fortawesome/fontawesome-svg-core";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+
+library.add(faArrowLeft);
 
 const meta: Meta<typeof DIconButton> = {
   title: "Components/DIconButton",
 
   component: DIconButton,
-  render: (args) => ({
+  render: () => ({
     components: {
       DIconButton,
-      FontAwesomeIcon,
     },
     setup() {
       return {
-        args,
-        faArrowLeft,
         onClick: action("on-click"),
       };
     },
     template: `
       <div>
         <d-icon-button
-          v-bind="args"
+          icon="fa-arrow-left"
           @click="onClick"
-        >
-          <font-awesome-icon :icon="faArrowLeft" />
-        </d-icon-button>
+        />
       </div>
     `,
   }),
