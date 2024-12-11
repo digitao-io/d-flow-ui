@@ -1,18 +1,17 @@
 <template>
-  <label class="d-input">
-    <span class="d-input__label">
+  <label class="d-textarea">
+    <span class="d-textarea__label">
       {{ props.label }}
     </span>
-    <input
+    <textarea
       v-model="model"
-      class="d-input__input"
-      type="text"
+      class="d-textarea__textarea"
       :placeholder="props.placeholder"
-      @blur="handleBlur"
-    >
+      @blur="update"
+    />
     <div
       v-if="props.errorMessage"
-      class="d-input__error-message"
+      class="d-textarea__error-message"
     >
       {{ props.errorMessage }}
     </div>
@@ -32,7 +31,7 @@ const emit = defineEmits<{
 
 const model = defineModel<string>();
 
-function handleBlur() {
+function update() {
   if (model.value === undefined) {
     return;
   }
@@ -40,24 +39,25 @@ function handleBlur() {
 }
 </script>
 
-<style lang="scss" scoped>
-.d-input {
+<style scoped lang="scss">
+.d-textarea {
   display: block;
 
   &__label {
+    @include tokens.typography-text-s--bold;
     display: block;
     color: tokens.$color-flavor1;
-    @include tokens.typography-text-s--bold;
   }
 
-  &__input {
+  &__textarea {
     @include tokens.typography-text--medium;
     @include tokens.round-edged-block;
-    height: tokens.$input-size;
     width: 100%;
+    height: 6 * tokens.$input-size;
     border: none;
     border-bottom: 2px solid tokens.$color-flavor1;
-    padding: 0 tokens.$space-s;
+    resize: vertical;
+    padding: tokens.$space-s;
     background-color: tokens.$color-flavor1l-t1;
 
     &::placeholder {

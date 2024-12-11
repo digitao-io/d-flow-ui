@@ -71,9 +71,9 @@ function togglePassword() {
   display: block;
 
   &__label {
+    @include tokens.typography-text-s--bold;
     display: block;
     color: tokens.$color-flavor1;
-    @include tokens.typography-text-s--bold;
   }
 
   &__container {
@@ -84,13 +84,12 @@ function togglePassword() {
   }
 
   &__input {
+    @include tokens.typography-text--medium;
     flex: 1 1;
     height: tokens.$input-size;
-    padding-left: tokens.$space-s;
-    padding-right: tokens.$space-s;
     border: none;
     border-bottom: 2px solid tokens.$color-flavor1;
-    @include tokens.typography-text--medium;
+    padding: 0 tokens.$space-s;
     background-color: tokens.$color-flavor1l-t1;
 
     &::placeholder {
