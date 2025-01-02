@@ -70,6 +70,10 @@ const props = defineProps<{
   errorMessage?: string;
 }>();
 
+const emit = defineEmits<{
+  update: [File[]];
+}>();
+
 const fileInput = useTemplateRef("file-input");
 
 function onFileSelect() {
@@ -78,6 +82,8 @@ function onFileSelect() {
     .filter((file) => props.allowedMimeTypes.includes(file.type));
   model.value = files;
   fileInput.value!.value = "";
+
+  emit("update", files);
 }
 
 function onFileDelete(deletedFile: File) {

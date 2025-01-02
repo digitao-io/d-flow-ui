@@ -25,15 +25,45 @@
 
 <script setup lang="ts">
 import { computed, ref } from "vue";
-import Ajv from "ajv";
+import Ajv, { ErrorObject } from "ajv";
 
 const ajv = new Ajv();
 
 type FormValidationDefinition = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   schema: any;
-  errorMessage: string;
+  errorMessage: string | FormValidationErrorMessageDefinition;
 };
+
+type FormValidationErrorMessageDefinition =
+  | {
+    type: "array";
+    self: string;
+    items: string;
+  }
+  | {
+    type: "object";
+    self: string;
+    properties: Record<string, string>;
+  };
+
+type FormValidationErrorMessage =
+  | {
+    type: "array";
+    self: string;
+    items: string[];
+  }
+  | {
+    type: "object";
+    self: string;
+    properties: Record<string, string>;
+  };
+
+function errorMessageIsString(
+  errMsg: string | FormValidationErrorMessageDefinition,
+): errMsg is string {
+  return typeof errMsg === "string" || errMsg instanceof String;
+}
 
 const props = defineProps<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -46,24 +76,74 @@ const emit = defineEmits<{
   submit: [Record<string, any>];
 }>();
 
-const validationResult = ref<Record<string, boolean>>(
+const validationResult = ref<Record<string, ErrorObject[] | null>>(
   Object.keys(props.values).reduce((obj, key) => {
-    obj[key] = true;
+    obj[key] = null;
     return obj;
-  }, {} as Record<string, boolean>),
+  }, {} as Record<string, ErrorObject[] | null>),
 );
 
-const errorMessage = computed<Record<string, string>>(() =>
+const errorMessage = computed<Record<string, string | FormValidationErrorMessage>>(() =>
   Object.keys(props.values).reduce((obj, key) => {
-    obj[key] = !validationResult.value[key]
-      ? props.validation[key].errorMessage
-      : "";
-    return obj;
-  }, {} as Record<string, string>),
+    const errors = validationResult.value[key];
+    const errorMessageDefinition = props.validation[key].errorMessage;
+
+    if (errorMessageIsString(errorMessageDefinition)) {
+      obj[key] = errors ? errorMessageDefinition : "";
+      return obj;
+    }
+    else {
+      let errorMessage: FormValidationErrorMessage;
+      if (errorMessageDefinition.type === "array") {
+        errorMessage = {
+          type: "array",
+          self: "",
+          items: [...Array((props.values[key] as Array<unknown>).length)].map(() => ""),
+        };
+      }
+      else {
+        errorMessage = {
+          type: "object",
+          self: "",
+          properties: Object.keys(props.values[key]).reduce((propertiesObj, key) => {
+            propertiesObj[key] = "";
+            return propertiesObj;
+          }, {} as Record<string, string>),
+        };
+      }
+
+      for (const error of errors ?? []) {
+        if (
+          errorMessageDefinition.type === "array"
+          && errorMessage.type === "array"
+          && error.schemaPath.startsWith("#/items")
+        ) {
+          const index = Number(error.instancePath.substring(1));
+          errorMessage.items[index] = errorMessageDefinition.items ?? "";
+        }
+        else if (
+          errorMessageDefinition.type === "object"
+          && errorMessage.type === "object"
+          && error.schemaPath.startsWith("#/properties")
+        ) {
+          const key = error.instancePath.substring(1);
+          errorMessage.properties[key] = errorMessageDefinition.properties[key] ?? "";
+        }
+        else {
+          errorMessage.self = errorMessageDefinition.self;
+        }
+      }
+
+      obj[key] = errorMessage;
+
+      return obj;
+    }
+  }, {} as Record<string, string | FormValidationErrorMessage>),
 );
 
 function validate(key: string) {
-  validationResult.value[key] = ajv.validate(props.validation[key].schema, props.values[key]);
+  const valid = ajv.validate(props.validation[key].schema, props.values[key]);
+  validationResult.value[key] = !valid ? ajv.errors! : null;
 }
 
 function submit() {
@@ -71,7 +151,7 @@ function submit() {
 
   for (const key in props.values) {
     const valid = ajv.validate(props.validation[key].schema, props.values[key]);
-    validationResult.value[key] = valid;
+    validationResult.value[key] = !valid ? ajv.errors! : null;
     if (!valid) {
       fullyValid = false;
     }
