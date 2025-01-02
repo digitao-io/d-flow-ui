@@ -82,12 +82,12 @@ function selectTab(name: string) {
     background-color: tokens.$color-flavor1l;
 
     &:hover {
-      background-color: tokens.$color-flavor1l-t1;
+      background-color: tokens.$color-flavor1l-t2;
     }
 
     &--selected {
-      color: tokens.$color-flavor1-s1;
-      background-color: tokens.$color-flavor1l-t2;
+      color: tokens.$color-flavor1;
+      background-color: tokens.$color-flavor1l-t3;
     }
   }
 
@@ -103,7 +103,7 @@ function selectTab(name: string) {
     @include tokens.round-edged-block;
     flex: 1 1;
     padding: tokens.$space-m;
-    background-color: tokens.$color-flavor1l-t2;
+    background-color: tokens.$color-flavor1l-t3;
   }
 
   &__content-title {

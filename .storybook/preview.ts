@@ -9,9 +9,9 @@ const preview: Preview = {
   parameters: {
     backgrounds: {
       values: [
-        { name: "White", value: "#FFFFFF" },
-        { name: "Cold", value: "#ECEFF1" },
-        { name: "Warm", value: "#FFF7F1" },
+        { name: "White", value: "#ffffff" },
+        { name: "Cold", value: "#eceff1" },
+        { name: "Warm", value: "#fff6ee" },
       ],
       // 👇 Specify which background is shown by default
       default: "White",

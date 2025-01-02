@@ -3,6 +3,7 @@
     <span class="d-array__label">
       {{ props.label }}
     </span>
+
     <div class="d-array__list">
       <div
         v-for="(item, index) of model"
@@ -24,16 +25,17 @@
           <font-awesome-icon :icon="faCircleMinus" />
         </button>
       </div>
-      <d-button
-        class="d-array__add-button"
-        icon="fa-plus"
-        :disabled="(model?.length ?? 0) >= (maxItems ?? Number.MAX_SAFE_INTEGER)"
-        secondary
-        @click="addItem"
-      >
-        {{ props.addButtonLabel }}
-      </d-button>
     </div>
+
+    <d-button
+      class="d-array__add-button"
+      icon="fa-plus"
+      :disabled="(model?.length ?? 0) >= (maxItems ?? Number.MAX_SAFE_INTEGER)"
+      secondary
+      @click="addItem"
+    >
+      {{ props.addButtonLabel }}
+    </d-button>
 
     <div
       v-if="props.errorMessage"
@@ -85,18 +87,19 @@ function deleteItem(index: number) {
   }
 
   &__list {
-    padding: tokens.$space-s 0 tokens.$space-s tokens.$space-m;
+    margin-bottom: tokens.$space-s;
   }
 
   &__item {
+    @include tokens.round-edged-block;
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: tokens.$space-s;
-    margin-bottom: tokens.$space-s;
+    padding: tokens.$space-s;
 
-    &:last-of-type {
-      margin-bottom: tokens.$space-m;
+    &:hover {
+      background-color: tokens.$color-flavor1l-t2;
     }
   }
 

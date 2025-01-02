@@ -33,15 +33,21 @@
         :key="selectedFile.name"
         class="d-file-input__selected-file"
       >
-        <span class="d-file-input__selected-file-name">
-          {{ selectedFile.name }}
-        </span>
+        <div class="d-file-input__selected-file-info">
+          <div class="d-file-input__selected-file-name">
+            {{ selectedFile.name }}
+          </div>
+
+          <div class="d-file-input__selected-file-metadata">
+            {{ selectedFile.type }}, {{ (selectedFile.size / 1024).toFixed(2) }} KiB
+          </div>
+        </div>
         <button
           class="d-file-input__selected-file-removal-button"
           type="button"
           @click="onFileDelete(selectedFile)"
         >
-          <font-awesome-icon :icon="faCircleXmark" />
+          <font-awesome-icon :icon="faCircleMinus" />
         </button>
       </li>
     </ul>
@@ -58,7 +64,7 @@
 <script setup lang="ts">
 import { useTemplateRef } from "vue";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { faFileCirclePlus, faCircleXmark } from "@fortawesome/free-solid-svg-icons";
+import { faFileCirclePlus, faCircleMinus } from "@fortawesome/free-solid-svg-icons";
 
 const model = defineModel<File[]>();
 
@@ -139,7 +145,6 @@ function onFileDelete(deletedFile: File) {
   }
 
   &__selected-file-list {
-    @include tokens.typography-text-s;
     margin: tokens.$space-s 0;
     max-width: 100%;
     padding: 0;
@@ -147,18 +152,34 @@ function onFileDelete(deletedFile: File) {
   }
 
   &__selected-file {
+    @include tokens.round-edged-block;
     display: flex;
     justify-content: space-between;
+    gap: tokens.$space-s;
+    padding: tokens.$space-s;
+
+    &:hover {
+      background-color: tokens.$color-flavor1l-t2;
+    }
+  }
+
+  &__selected-file-info {
+    min-width: 0;
   }
 
   &__selected-file-name {
+    @include tokens.typography-text;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
   }
 
-  &__selected-file-removal-button {
+  &__selected-file-metadata {
     @include tokens.typography-text-s;
+  }
+
+  &__selected-file-removal-button {
+    @include tokens.typography-text;
     margin: 0;
     border: none;
     padding: 0;
