@@ -139,8 +139,6 @@ function changeSorting(column: DTableColumnDefinition) {
     };
   }
 
-  console.log(sorting);
-
   emit("sortColumn", sorting);
 }
 </script>

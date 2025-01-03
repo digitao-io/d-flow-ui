@@ -60,7 +60,7 @@ interface OptionDefinition {
 const props = defineProps<{
   label: string;
   options: OptionDefinition[];
-  placeholder: string;
+  placeholder?: string;
 }>();
 
 const emit = defineEmits<{

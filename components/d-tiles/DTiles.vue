@@ -9,16 +9,16 @@
   >
     <li
       v-for="item of props.data"
-      :key="props.keyExtractor(item)"
+      :key="String(extractItemKey(item))"
       class="d-tiles__item-container"
     >
       <button
         class="d-tiles__item"
         :class="{
-          'd-tiles__item--selected': matchItemKey(props.keyExtractor(item), props.selectedTileKey),
+          'd-tiles__item--selected': matchItemKey(extractItemKey(item), props.selectedTileKey),
         }"
         type="button"
-        @click="onItemClick(props.keyExtractor(item))"
+        @click="onItemClick(extractItemKey(item))"
       >
         <slot
           name="tile"
@@ -38,14 +38,22 @@ const props = defineProps<{
   tileWidth: string;
   tileHeight: string;
   tileGap: string;
-  keyExtractor: (item: DTilesItemData) => DTilesItemKey;
+  keyField: string | string[];
   data: DTilesItemData[];
-  selectedTileKey: DTileItemKey;
+  selectedTileKey: DTilesItemKey;
 }>();
 
 const emit = defineEmits<{
   selectTile: [DTilesItemKey];
 }>();
+
+function extractItemKey(item: DTilesItemData): DTilesItemKey {
+  const keyArray = Object.keys(item).sort((k1, k2) => k1.localeCompare(k2))
+    .filter((field) => props.keyField.includes(field))
+    .map((field) => item[field]);
+
+  return keyArray.length === 1 ? keyArray[0] : keyArray;
+}
 
 function matchItemKey(key1: DTilesItemKey, key2: DTilesItemKey): boolean {
   return JSON.stringify(key1) === JSON.stringify(key2);
