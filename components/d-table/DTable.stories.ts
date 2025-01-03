@@ -29,16 +29,16 @@ const meta: Meta<typeof DTable> = {
     },
 
     template: `
-    <div>
-      <d-table
-        v-bind="args"
-        :selected-row-key="selectedRowKey"
-        :sorting="currentSorting"
-        @select-row="onSelectRow"
-        @sort-column="onSortColumn"
-      />
-    </div>
-  `,
+      <div>
+        <d-table
+          v-bind="args"
+          :selected-row-key="selectedRowKey"
+          :sorting="currentSorting"
+          @select-row="onSelectRow"
+          @sort-column="onSortColumn"
+        />
+      </div>
+    `,
   }),
 };
 

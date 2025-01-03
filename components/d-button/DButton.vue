@@ -53,9 +53,6 @@ const props = defineProps({
   text-transform: uppercase;
   @include tokens.typography-text--bold;
 
-  transition-property: background-color, transform;
-  transition-duration: tokens.$anim-duration;
-
   &:active {
     transform: translateY(1px);
   }

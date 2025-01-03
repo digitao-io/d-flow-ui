@@ -46,7 +46,7 @@ $line-height-title: 1;
 $line-height-text: 1.5;
 $text-transform-title: uppercase;
 
-$anim-duration: 0.08s;
+$box-shadow-l1: 3px 3px 9px $color-neutral-g-t1;
 
 @mixin typography-title-xl {
   font-family: $font-family;
