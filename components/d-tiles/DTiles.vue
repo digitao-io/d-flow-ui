@@ -49,7 +49,14 @@ const emit = defineEmits<{
 
 function extractItemKey(item: DTilesItemData): DTilesItemKey {
   const keyArray = Object.keys(item).sort((k1, k2) => k1.localeCompare(k2))
-    .filter((field) => props.keyField.includes(field))
+    .filter((field) => {
+      if (typeof props.keyField === "string" || props.keyField instanceof String) {
+        return props.keyField === field;
+      }
+      else {
+        props.keyField.includes(field);
+      }
+    })
     .map((field) => item[field]);
 
   return keyArray.length === 1 ? keyArray[0] : keyArray;

@@ -54,7 +54,7 @@ type Story = StoryObj<typeof DTiles>;
 
 export const Default: Story = {
   args: {
-    keyField: ["id"],
+    keyField: "id",
     data: [
       { id: "a", thumbnailUrl: `https://picsum.photos/seed/${Math.floor(Math.random() * 1000)}/600/600`, name: "Foo Picture 1" },
       { id: "b", thumbnailUrl: `https://picsum.photos/seed/${Math.floor(Math.random() * 1000)}/600/600`, name: "Bar Image 1" },
