@@ -260,6 +260,8 @@ function changeSorting(column: DTableColumnDefinition) {
   }
 
   &__body-cell {
+    display: flex;
+    align-items: center;
     padding: tokens.$space-xs tokens.$space-s;
     text-align: var(--text-alignment);
     cursor: pointer;
