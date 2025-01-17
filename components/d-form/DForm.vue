@@ -47,17 +47,19 @@ export type DFormValidationErrorMessageDefinition =
     properties: Record<string, string>;
   };
 
-export type DFormErrorMessageObject =
-  | {
-    type: "array";
-    self: string;
-    items: string[];
-  }
-  | {
-    type: "object";
-    self: string;
-    properties: Record<string, string>;
-  };
+export type DFormErrorMessage = string | DFormErrorMessageObject | DFormErrorMessageArray;
+
+export type DFormErrorMessageObject = {
+  type: "object";
+  self: string;
+  properties: Record<string, string>;
+};
+
+export type DFormErrorMessageArray = {
+  type: "array";
+  self: string;
+  items: string[];
+};
 
 function errorMessageIsString(
   errMsg: string | DFormValidationErrorMessageDefinition,
@@ -83,7 +85,7 @@ const validationResult = ref<Record<string, ErrorObject[] | null>>(
   }, {} as Record<string, ErrorObject[] | null>),
 );
 
-const errorMessage = computed<Record<string, string | DFormErrorMessageObject>>(() =>
+const errorMessage = computed<Record<string, DFormErrorMessage>>(() =>
   Object.keys(props.values).reduce((obj, key) => {
     const errors = validationResult.value[key];
     const errorMessageDefinition = props.validation[key].errorMessage;
@@ -93,7 +95,7 @@ const errorMessage = computed<Record<string, string | DFormErrorMessageObject>>(
       return obj;
     }
     else {
-      let errorMessage: DFormErrorMessageObject;
+      let errorMessage: DFormErrorMessage;
       if (errorMessageDefinition.type === "array") {
         errorMessage = {
           type: "array",
@@ -138,7 +140,7 @@ const errorMessage = computed<Record<string, string | DFormErrorMessageObject>>(
 
       return obj;
     }
-  }, {} as Record<string, string | DFormErrorMessageObject>),
+  }, {} as Record<string, DFormErrorMessage>),
 );
 
 function validate(key: string) {
