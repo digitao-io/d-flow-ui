@@ -26,23 +26,40 @@
           :icon="faAngleUp"
         />
       </button>
-      <ul
+      <div
         v-if="showDropdown"
-        class="d-dropdown__list"
+        class="d-dropdown__dropdown-area"
       >
-        <li
-          v-for="option in filteredOptions"
-          :key="option.label"
-          class="d-dropdown__item"
+        <ul
+          v-if="filteredOptions.length > 0"
+          class="d-dropdown__list"
         >
-          <button
-            class="d-dropdown__item-button"
-            @click="selectOption(option)"
+          <li
+            v-for="option in filteredOptions"
+            :key="option.label"
+            class="d-dropdown__item"
           >
-            {{ option.label }}
-          </button>
-        </li>
-      </ul>
+            <button
+              class="d-dropdown__item-button"
+              @click="selectOption(option)"
+            >
+              {{ option.label }}
+            </button>
+          </li>
+        </ul>
+        <div
+          v-else-if="filteredOptions.length === 0 && options.length > 0"
+          class="d-dropdown__hint-message"
+        >
+          {{ props.noResultMessage || 'NO_RESULT_AVAILABLE' }}
+        </div>
+        <div
+          v-else-if="options.length === 0"
+          class="d-dropdown__hint-message"
+        >
+          {{ props.noOptionMessage || 'NO_OPTION_AVAILABLE' }}
+        </div>
+      </div>
     </div>
   </label>
 </template>
@@ -62,6 +79,8 @@ const props = defineProps<{
   label: string;
   options: OptionDefinition[];
   placeholder?: string;
+  noResultMessage?: string;
+  noOptionMessage?: string;
 }>();
 
 const emit = defineEmits<{
@@ -175,15 +194,19 @@ function toggleDropdown() {
     cursor: pointer;
   }
 
-  &__list {
+  &__dropdown-area {
     position: absolute;
     top: 100%;
     left: 0;
     right: 0;
-    z-index: 9999;
-    margin: 0;
-    padding: 0;
+    z-index: 1;
+    padding: tokens.$space-m;
     background-color: tokens.$color-flavor1l-t1;
+  }
+
+  &__list {
+    margin: 0 (- tokens.$space-m);
+    padding: 0;
     list-style: none;
   }
 
@@ -202,6 +225,12 @@ function toggleDropdown() {
     &:hover {
       background-color: tokens.$color-flavor1l;
     }
+  }
+
+  &__hint-message {
+    @include tokens.typography-text--medium;
+    color: tokens.$color-neutral-g;
+    text-align: center;
   }
 }
 </style>

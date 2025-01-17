@@ -40,13 +40,23 @@ type Story = StoryObj<typeof DDropdown>;
 
 export const Default: Story = {
   args: {
-    label: "Status der Bestellung",
+    label: "Car Brand",
     options: [
       { label: "BMW", value: "bmw" },
       { label: "Mercedes-Benz", value: "mercedes" },
       { label: "Audi", value: "audi" },
       { label: "Volkswagen", value: "vw" },
     ],
-    placeholder: "Bitte geben Sie Text ein",
+    placeholder: "Your favorite car brand",
+    noResultMessage: "No result matching the input",
+  },
+};
+
+export const NoOption: Story = {
+  args: {
+    label: "Car Brand",
+    options: [],
+    placeholder: "Your favorite car brand",
+    noOptionMessage: "Have you forgot to add options?",
   },
 };
