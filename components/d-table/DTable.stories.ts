@@ -8,11 +8,11 @@ const meta: Meta<typeof DTable> = {
   render: (args) => ({
     components: { DTable },
     setup() {
-      const selectedRowKey = ref<DTableRowKey>(null);
+      const selectedRowKeys = ref<DTableRowKey[]>([]);
       const currentSorting = ref<DTableSorting>({ name: "id", order: "asc" });
 
-      function onSelectRow(key: string) {
-        selectedRowKey.value = key;
+      function onSelectRows(keys: string[]) {
+        selectedRowKeys.value = keys;
       }
 
       function onSortColumn(sorting: DTableSorting) {
@@ -21,9 +21,9 @@ const meta: Meta<typeof DTable> = {
 
       return {
         args,
-        selectedRowKey,
+        selectedRowKeys,
         currentSorting,
-        onSelectRow,
+        onSelectRows,
         onSortColumn,
       };
     },
@@ -32,9 +32,9 @@ const meta: Meta<typeof DTable> = {
       <div>
         <d-table
           v-bind="args"
-          :selected-row-key="selectedRowKey"
+          :selected-row-keys="selectedRowKeys"
           :sorting="currentSorting"
-          @select-row="onSelectRow"
+          @select-rows="onSelectRows"
           @sort-column="onSortColumn"
         />
       </div>
@@ -50,28 +50,25 @@ export const Default: Story = {
   args: {
     columns: [
       {
-        key: true,
         name: "id",
         label: "ID",
-        sortable: true,
         width: "70px",
         data: "id",
         textAlignment: "end",
+        key: true,
+        sortable: true,
       },
       {
-        key: false,
         name: "name",
         label: "Name",
-        sortable: true,
         width: "minmax(150px, 1fr)",
         data: "name",
         textAlignment: "start",
+        sortable: true,
       },
       {
-        key: false,
         name: "description",
         label: "Description",
-        sortable: false,
         width: "minmax(450px, 3fr)",
         data: "description",
         textAlignment: "start",
@@ -82,5 +79,6 @@ export const Default: Story = {
       { id: 2, name: "BLISS", description: "Phasellus porttitor erat id est cursus dictum. Sed ornare orci vitae pulvinar pellentesque. Integer vel diam a dolor dictum consequat." },
       { id: 3, name: "Under the SummerBlue Sky", description: "Proin pharetra eget orci ut dictum. Cras eget lacinia tortor. Maecenas nec enim tincidunt, vulputate neque nec, laoreet magna. Etiam imperdiet auctor ex sit amet elementum. Pellentesque varius tortor sit amet urna accumsan elementum." },
     ],
+    multipleSelect: true,
   },
 };

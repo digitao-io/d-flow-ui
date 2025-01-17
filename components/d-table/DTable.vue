@@ -18,7 +18,7 @@
           <span class="d-table__head-text">{{ column.label }}</span>
 
           <font-awesome-icon
-            v-if="column.sortable"
+            v-if="props.sorting && column.sortable"
             class="d-table__head-sorting-icon"
             :class="{
               'd-table__head-sorting-icon--active': column.name === props.sorting.name,
@@ -31,13 +31,13 @@
     </thead>
     <tbody class="d-table__body-area">
       <tr
-        v-for="row in data"
+        v-for="(row, index) in data"
         :key="String(extractRowKey(row))"
         class="d-table__body-row"
         :class="{
-          'd-table__body-row--selected': matchRowKey(extractRowKey(row), props.selectedRowKey),
+          'd-table__body-row--selected': props.selectedRowKeys.includes(extractRowKey(row)),
         }"
-        @click="selectRow(row)"
+        @mousedown.prevent="selectRow(row, index, $event)"
       >
         <td
           v-for="column in props.columns"
@@ -47,7 +47,15 @@
             '--text-alignment': column.textAlignment,
           }"
         >
-          {{ row[column.data] }}
+          <template v-if="column.slot">
+            <slot
+              :name="column.slot"
+              :cell-data="row[column.data]"
+            />
+          </template>
+          <template v-else>
+            {{ row[column.data] }}
+          </template>
         </td>
       </tr>
     </tbody>
@@ -59,18 +67,19 @@ import { computed } from "vue";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { faSort, faArrowUpShortWide, faArrowDownWideShort } from "@fortawesome/free-solid-svg-icons";
 
-export type DTableRowValue = string | number | boolean | null;
-export type DTableRowKey = DTableRowValue | DTableRowValue[];
-export type DTableRowData = Record<string, DTableRowValue>;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type DTableRowData = Record<string, any>;
+export type DTableRowKey = string | number;
 
 export interface DTableColumnDefinition {
   name: string;
   label: string;
   data: string;
-  key: boolean;
-  sortable: boolean;
   width: string;
   textAlignment: "start" | "center" | "end";
+  slot?: string;
+  key?: true;
+  sortable?: true;
 }
 
 export interface DTableSorting {
@@ -81,31 +90,68 @@ export interface DTableSorting {
 const props = defineProps<{
   columns: DTableColumnDefinition[];
   data: DTableRowData[];
-  selectedRowKey: DTableRowKey;
-  sorting: DTableSorting;
+  selectedRowKeys: DTableRowKey[];
+  sorting?: DTableSorting;
+  multipleSelect?: boolean;
 }>();
 
 const emit = defineEmits<{
-  selectRow: [DTableRowValue | DTableRowValue[]];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  selectRows: [any[]];
   sortColumn: [DTableSorting];
 }>();
 
 const gridTemplateColumns = computed<string>(() => props.columns.map((column) => column.width).join(" "));
 
-function selectRow(row: DTableRowData) {
-  emit("selectRow", extractRowKey(row));
+function selectRow(row: DTableRowData, index: number, ev: MouseEvent) {
+  const newKey = extractRowKey(row);
+
+  if (ev.ctrlKey && props.multipleSelect) {
+    if (props.selectedRowKeys.includes(newKey)) {
+      emit("selectRows", [...props.selectedRowKeys.filter((key) => key !== newKey)]);
+    }
+    else {
+      emit("selectRows", [...props.selectedRowKeys, newKey]);
+    }
+  }
+  else if (ev.shiftKey && props.multipleSelect) {
+    const lastSelectedKey = props.selectedRowKeys[props.selectedRowKeys.length - 1];
+
+    if (!lastSelectedKey) {
+      emit("selectRows", [newKey]);
+    }
+    else {
+      const lastSelectedIndex = props.data.findIndex((rowData) => extractRowKey(rowData) === lastSelectedKey);
+      if (lastSelectedIndex < 0) {
+        emit("selectRows", [newKey]);
+      }
+      else {
+        const selectedKeys = [];
+
+        const startIndex = Math.min(lastSelectedIndex, index);
+        const endIndex = Math.max(lastSelectedIndex, index);
+
+        for (let i = startIndex; i <= endIndex; i++) {
+          selectedKeys.push(extractRowKey(props.data[i]));
+        }
+        emit("selectRows", selectedKeys);
+      }
+    }
+  }
+  else {
+    if (props.selectedRowKeys.includes(newKey) && props.selectedRowKeys.length === 1) {
+      emit("selectRows", []);
+    }
+    else {
+      emit("selectRows", [newKey]);
+    }
+  }
 }
 
 function extractRowKey(row: DTableRowData): DTableRowKey {
-  const keyArray = props.columns
-    .filter((column) => column.key)
-    .map((column) => row[column.data]);
+  const keyColumn = props.columns.find((column) => column.key)!;
 
-  return keyArray.length === 1 ? keyArray[0] : keyArray;
-}
-
-function matchRowKey(key1: DTableRowKey, key2: DTableRowKey): boolean {
-  return JSON.stringify(key1) === JSON.stringify(key2);
+  return row[keyColumn.name];
 }
 
 function extractSortIcon(column: DTableColumnDefinition) {
@@ -113,7 +159,7 @@ function extractSortIcon(column: DTableColumnDefinition) {
     return null;
   }
 
-  if (props.sorting.name === column.name) {
+  if (props.sorting?.name === column.name) {
     return props.sorting.order === "asc"
       ? faArrowUpShortWide
       : faArrowDownWideShort;
@@ -124,6 +170,10 @@ function extractSortIcon(column: DTableColumnDefinition) {
 }
 
 function changeSorting(column: DTableColumnDefinition) {
+  if (!props.sorting) {
+    return;
+  }
+
   let sorting: DTableSorting;
 
   if (props.sorting.name !== column.name) {
