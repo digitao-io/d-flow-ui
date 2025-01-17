@@ -11,21 +11,29 @@
         >
           {{ item.label }}
         </dt>
-        <dd
-          v-if="item.type === 'image'"
-          class="d-data-list__value"
-        >
-          <img
-            :src="item.value"
-            alt="This is a picture"
-            class="d-data-list__thumbnail"
-          >
-        </dd>
-        <dd
-          v-else
-          class="d-data-list__value"
-        >
-          {{ item.value }}
+        <dd class="d-data-list__value">
+          <template v-if="item.type === 'image'">
+            <img
+              :src="item.value"
+              alt="This is a picture"
+              class="d-data-list__thumbnail"
+            >
+          </template>
+
+          <template v-else-if="item.type === 'list'">
+            <ul class="d-data-list__item-list">
+              <li
+                v-for="listItem of (item.value as string[])"
+                :key="listItem"
+              >
+                {{ listItem }}
+              </li>
+            </ul>
+          </template>
+
+          <template v-else>
+            {{ item.value }}
+          </template>
         </dd>
       </div>
     </dl>
@@ -33,15 +41,16 @@
 </template>
 
 <script setup lang="ts">
-interface DataValue {
+interface DDataListValue {
   key: string;
   label: string;
-  value: string;
-  type: "text" | "image";
+  type: "text" | "image" | "list";
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  value: any;
 }
 
 const props = defineProps<{
-  dataValues: DataValue[];
+  dataValues: DDataListValue[];
 }>();
 </script>
 
@@ -55,6 +64,7 @@ const props = defineProps<{
 
   &__label {
     @include tokens.typography-text-s--bold;
+    color: tokens.$color-neutral-g;
     text-transform: uppercase;
   }
 
@@ -64,8 +74,13 @@ const props = defineProps<{
     max-height: 360px;
   }
 
+  &__item-list {
+    margin: 0;
+    padding: 0;
+    padding-left: tokens.$space-l;
+  }
+
   &__value {
-    padding-left: tokens.$space-s;
     margin-inline-start: 0;
     @include tokens.typography-text--medium;
   }
