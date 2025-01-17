@@ -73,7 +73,7 @@ const props = defineProps<{
 
 const emit = defineEmits<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  submit: [Record<string, any>];
+  submit: [any];
 }>();
 
 const validationResult = ref<Record<string, ErrorObject[] | null>>(
