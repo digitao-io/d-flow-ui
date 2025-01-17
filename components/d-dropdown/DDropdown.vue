@@ -54,7 +54,8 @@ import { computed, nextTick, ref, watch } from "vue";
 
 interface OptionDefinition {
   label: string;
-  value: unknown;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  value: any;
 }
 
 const props = defineProps<{
@@ -64,10 +65,12 @@ const props = defineProps<{
 }>();
 
 const emit = defineEmits<{
-  "update": [unknown];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  "update": [any];
 }>();
 
-const model = defineModel<unknown>();
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const model = defineModel<any>();
 
 const showDropdown = ref<boolean>(false);
 const searchQuery = ref<string>("");
