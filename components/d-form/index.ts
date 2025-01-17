@@ -1,3 +1,12 @@
-import DForm from "./DForm.vue";
+import DForm, {
+  type DFormValidationDefinition,
+  type DFormValidationErrorMessageDefinition,
+  type DFormErrorMessageObject,
+} from "./DForm.vue";
 
-export { DForm };
+export {
+  DForm,
+  DFormValidationDefinition,
+  DFormValidationErrorMessageDefinition,
+  DFormErrorMessageObject,
+};
