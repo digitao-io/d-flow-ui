@@ -73,7 +73,7 @@ const showDropdown = ref<boolean>(false);
 const searchQuery = ref<string>("");
 
 const filteredOptions = computed(() =>
-  props.options.filter((option) => option.label.toLocaleLowerCase().startsWith(searchQuery.value.toLocaleLowerCase())));
+  props.options.filter((option) => option.label.toLocaleLowerCase().includes(searchQuery.value.toLocaleLowerCase())));
 const selectedLabel = computed(() =>
   props.options.find((option) => option.value === model.value)?.label ?? "");
 
