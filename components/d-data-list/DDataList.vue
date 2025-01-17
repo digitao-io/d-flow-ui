@@ -65,6 +65,7 @@ const props = defineProps<{
   }
 
   &__value {
+    padding-left: tokens.$space-s;
     margin-inline-start: 0;
     @include tokens.typography-text--medium;
   }
