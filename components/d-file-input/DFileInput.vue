@@ -195,7 +195,6 @@ function onFileDelete(deletedFile: File) {
   &__error-message {
     @include tokens.typography-text-s;
     color: tokens.$color-error;
-    min-height: 24px;
   }
 }
 </style>

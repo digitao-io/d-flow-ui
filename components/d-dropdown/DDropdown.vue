@@ -61,6 +61,12 @@
         </div>
       </div>
     </div>
+    <div
+      v-if="props.errorMessage"
+      class="d-dropdown__error-message"
+    >
+      {{ props.errorMessage }}
+    </div>
   </label>
 </template>
 
@@ -81,6 +87,7 @@ const props = defineProps<{
   placeholder?: string;
   noResultMessage?: string;
   noOptionMessage?: string;
+  errorMessage?: string;
 }>();
 
 const emit = defineEmits<{
@@ -231,6 +238,11 @@ function toggleDropdown() {
     @include tokens.typography-text--medium;
     color: tokens.$color-neutral-g;
     text-align: center;
+  }
+
+  &__error-message {
+    @include tokens.typography-text-s;
+    color: tokens.$color-error;
   }
 }
 </style>

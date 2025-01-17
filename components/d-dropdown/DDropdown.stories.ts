@@ -58,5 +58,6 @@ export const NoOption: Story = {
     options: [],
     placeholder: "Your favorite car brand",
     noOptionMessage: "Have you forgot to add options?",
+    errorMessage: "Something goes wrong here",
   },
 };
