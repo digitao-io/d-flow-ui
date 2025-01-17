@@ -32,7 +32,7 @@
       >
         <li
           v-for="option in filteredOptions"
-          :key="option.value"
+          :key="option.label"
           class="d-dropdown__item"
         >
           <button
@@ -54,7 +54,7 @@ import { computed, nextTick, ref, watch } from "vue";
 
 interface OptionDefinition {
   label: string;
-  value: string;
+  value: unknown;
 }
 
 const props = defineProps<{
@@ -64,10 +64,10 @@ const props = defineProps<{
 }>();
 
 const emit = defineEmits<{
-  "update": [string];
+  "update": [unknown];
 }>();
 
-const model = defineModel<string>();
+const model = defineModel<unknown>();
 
 const showDropdown = ref<boolean>(false);
 const searchQuery = ref<string>("");
