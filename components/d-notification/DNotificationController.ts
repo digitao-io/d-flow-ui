@@ -34,16 +34,30 @@ function pushNotification(notification: DNotificationParams) {
 }
 
 export function useDNotification() {
-  console.log(notifications);
+  console.log(id(notifications));
   return {
     pushNotification,
   };
 }
 
 export function useDNotificationInternally() {
-  console.log(notifications);
+  console.log(id(notifications));
   return {
     pushNotification,
     notifications,
   };
 }
+
+const id = (() => {
+  let currentId = 0;
+  const map = new WeakMap();
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return (object: any) => {
+    if (!map.has(object)) {
+      map.set(object, ++currentId);
+    }
+
+    return map.get(object);
+  };
+})();
