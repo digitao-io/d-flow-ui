@@ -12,6 +12,7 @@ const notifications = ref<DNotificationDefinition[]>([]);
 const notificationId = ref<number>(1);
 
 function pushNotification(notification: DNotificationParams) {
+  console.log(notification);
   const id = notificationId.value;
   notificationId.value++;
 
