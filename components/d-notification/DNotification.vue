@@ -1,4 +1,5 @@
 <template>
+  {{ notifications }}
   <ul class="d-notification">
     <li
       v-for="notification of notifications"
