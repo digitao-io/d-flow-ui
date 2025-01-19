@@ -108,7 +108,7 @@ function deleteItem(index: number) {
   }
 
   &__delete-button {
-    @include tokens.typography-text;
+    @include tokens.typography-text-l;
     margin: 0;
     border: none;
     padding: 0;

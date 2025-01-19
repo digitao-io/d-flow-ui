@@ -1,21 +1,22 @@
 <template>
   <label class="d-dropdown">
-    <span class="d-dropdown__label">
+    <div class="d-dropdown__label">
       {{ props.label }}
-    </span>
+    </div>
     <div class="d-dropdown__container">
       <input
         class="d-dropdown__input"
         type="text"
         :placeholder="props.placeholder"
         :value="showDropdown ? searchQuery : selectedLabel"
-        @input="handleInput"
-        @keydown.enter="handleEnterKeydown"
+        @input="onInput"
+        @keydown.enter="onInputEnterKeyDown"
+        @focus="onInputFocus"
       >
       <button
         class="d-dropdown__button"
         type="button"
-        @click="toggleDropdown"
+        @click.stop.prevent="toggleDropdown"
       >
         <font-awesome-icon
           v-if="!showDropdown"
@@ -41,7 +42,8 @@
           >
             <button
               class="d-dropdown__item-button"
-              @click="selectOption(option)"
+              type="button"
+              @click.stop.prevent="selectOption(option)"
             >
               {{ option.label }}
             </button>
@@ -77,8 +79,7 @@ import { computed, nextTick, ref, watch } from "vue";
 
 interface OptionDefinition {
   label: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  value: any;
+  value: string;
 }
 
 const props = defineProps<{
@@ -91,12 +92,10 @@ const props = defineProps<{
 }>();
 
 const emit = defineEmits<{
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  "update": [any];
+  "update": [string];
 }>();
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const model = defineModel<any>();
+const model = defineModel<string>();
 
 const showDropdown = ref<boolean>(false);
 const searchQuery = ref<string>("");
@@ -113,40 +112,36 @@ watch(() => model.value, (value) => {
   emit("update", value);
 });
 
-async function handleInput(event: Event) {
-  const newValue = (event.target! as HTMLInputElement).value;
+watch(() => showDropdown.value, (value) => {
+  searchQuery.value = value ? "" : selectedLabel.value;
+});
 
+async function onInputFocus() {
   if (!showDropdown.value) {
-    toggleDropdown();
+    showDropdown.value = true;
     await nextTick();
   }
-
-  searchQuery.value = newValue;
 }
 
-function handleEnterKeydown() {
+async function onInput(event: Event) {
+  searchQuery.value = (event.target! as HTMLInputElement).value;
+}
+
+function onInputEnterKeyDown() {
   if (!filteredOptions.value[0]) {
     return;
   }
 
-  model.value = filteredOptions.value[0].value;
-  toggleDropdown();
+  selectOption(filteredOptions.value[0]);
 }
 
 function selectOption(option: OptionDefinition) {
   model.value = option.value;
-  toggleDropdown();
+  showDropdown.value = false;
 };
 
 function toggleDropdown() {
   showDropdown.value = !showDropdown.value;
-
-  if (showDropdown.value) {
-    searchQuery.value = "";
-  }
-  else {
-    searchQuery.value = selectedLabel.value;
-  }
 };
 </script>
 
@@ -155,9 +150,8 @@ function toggleDropdown() {
   display: block;
 
   &__label {
-    display: block;
-    color: tokens.$color-flavor1;
     @include tokens.typography-text-s--bold;
+    color: tokens.$color-flavor1;
   }
 
   &__container {

@@ -16,12 +16,6 @@ const preview: Preview = {
       // 👇 Specify which background is shown by default
       default: "White",
     },
-    controls: {
-      matchers: {
-        color: /(background|color)$/i,
-        date: /Date$/i,
-      },
-    },
   },
 };
 
