@@ -53,6 +53,7 @@
 </template>
 
 <script setup lang="ts">
+import { watch } from "vue";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import {
   faCircleCheck,
@@ -61,7 +62,7 @@ import {
   faSkull,
   faCircleXmark,
 } from "@fortawesome/free-solid-svg-icons";
-import { useDNotificationInternally } from "./DNotificationController";
+import { useDNotificationInternally, uuid } from "./DNotificationController";
 
 export type DNotificationDefinition = {
   id: number;
@@ -71,6 +72,13 @@ export type DNotificationDefinition = {
 };
 
 const { notifications } = useDNotificationInternally();
+
+console.log(uuid(notifications));
+
+watch(() => notifications.value, () => {
+  console.log(notifications.value);
+  console.log(uuid(notifications));
+});
 
 function onDismiss(id: number) {
   const index = notifications.value.findIndex((n) => n.id === id);

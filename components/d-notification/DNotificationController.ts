@@ -53,7 +53,7 @@ export function useDNotificationInternally() {
   };
 }
 
-const uuid = (() => {
+export const uuid = (() => {
   let currentId = 0;
   const map = new WeakMap();
 
