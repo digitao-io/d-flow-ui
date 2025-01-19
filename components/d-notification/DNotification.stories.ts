@@ -3,7 +3,12 @@ import type { Meta, StoryObj } from "@storybook/vue3";
 import { DButton } from "../d-button";
 import { DDropdown } from "../d-dropdown";
 import { DForm } from "../d-form";
-import { useDNotification, DNotification, DNotificationParams } from ".";
+import {
+  useDNotificationPusher,
+  useDNotificationReceiver,
+  DNotification,
+  DNotificationParams,
+} from ".";
 
 const meta: Meta<typeof DNotification> = {
   title: "Components/DNotification",
@@ -16,7 +21,8 @@ const meta: Meta<typeof DNotification> = {
       DForm,
     },
     setup() {
-      const { pushNotification } = useDNotification();
+      const { pushNotification } = useDNotificationPusher();
+      const { notifications } = useDNotificationReceiver();
       const formValues = ref<{ type: DNotificationParams["type"] }>({ type: "info" });
       const formValidation = {
         type: {
@@ -29,6 +35,7 @@ const meta: Meta<typeof DNotification> = {
         formValues,
         formValidation,
         pushNotification,
+        notifications,
       };
     },
     template: `
@@ -64,7 +71,7 @@ const meta: Meta<typeof DNotification> = {
           </template>
         </d-form>
 
-        <d-notification />
+        <d-notification v-model="notifications" />
       </div>
     `,
   }),

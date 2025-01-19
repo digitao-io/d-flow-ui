@@ -1,8 +1,7 @@
 <template>
-  {{ notifications }}
   <ul class="d-notification">
     <li
-      v-for="notification of notifications"
+      v-for="notification of model"
       :key="notification.id"
       class="d-notification__item"
       :class="`d-notification__item--${notification.type}`"
@@ -53,7 +52,6 @@
 </template>
 
 <script setup lang="ts">
-import { watch } from "vue";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import {
   faCircleCheck,
@@ -62,7 +60,6 @@ import {
   faSkull,
   faCircleXmark,
 } from "@fortawesome/free-solid-svg-icons";
-import { useDNotificationInternally, uuid } from "./DNotificationController";
 
 export type DNotificationDefinition = {
   id: number;
@@ -71,19 +68,12 @@ export type DNotificationDefinition = {
   message: string;
 };
 
-const { notifications } = useDNotificationInternally();
-
-console.log(uuid(notifications));
-
-watch(() => notifications.value, () => {
-  console.log(notifications.value);
-  console.log(uuid(notifications));
-});
+const model = defineModel<DNotificationDefinition[]>({ default: [] });
 
 function onDismiss(id: number) {
-  const index = notifications.value.findIndex((n) => n.id === id);
-  notifications.value.splice(index, 1);
-  notifications.value = [...notifications.value];
+  const index = model.value.findIndex((n) => n.id === id);
+  model.value.splice(index, 1);
+  model.value = [...model.value];
 }
 </script>
 

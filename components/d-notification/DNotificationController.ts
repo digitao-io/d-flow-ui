@@ -12,11 +12,8 @@ const notifications = ref<DNotificationDefinition[]>([]);
 const notificationId = ref<number>(1);
 
 function pushNotification(notification: DNotificationParams) {
-  console.log(notification);
   const id = notificationId.value;
   notificationId.value++;
-
-  console.log(uuid(notifications));
 
   notifications.value = [
     ...notifications.value,
@@ -28,9 +25,6 @@ function pushNotification(notification: DNotificationParams) {
     },
   ];
 
-  console.log(uuid(notifications));
-  console.log(notifications.value);
-
   setTimeout(() => {
     const index = notifications.value.findIndex((n) => n.id === id);
     notifications.value.splice(index, 1);
@@ -38,31 +32,14 @@ function pushNotification(notification: DNotificationParams) {
   }, (notification.dismissInSeconds ?? 5) * 1000);
 }
 
-export function useDNotification() {
-  console.log(uuid(notifications));
+export function useDNotificationPusher() {
   return {
     pushNotification,
   };
 }
 
-export function useDNotificationInternally() {
-  console.log(uuid(notifications));
+export function useDNotificationReceiver() {
   return {
-    pushNotification,
     notifications,
   };
 }
-
-export const uuid = (() => {
-  let currentId = 0;
-  const map = new WeakMap();
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return (object: any) => {
-    if (!map.has(object)) {
-      map.set(object, ++currentId);
-    }
-
-    return map.get(object);
-  };
-})();

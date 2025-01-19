@@ -1,6 +1,6 @@
 import {
-  useDNotification,
-  useDNotificationInternally,
+  useDNotificationPusher,
+  useDNotificationReceiver,
   type DNotificationParams,
 } from "./DNotificationController";
 import DNotification from "./DNotification.vue";
@@ -8,6 +8,6 @@ import DNotification from "./DNotification.vue";
 export {
   DNotification,
   DNotificationParams,
-  useDNotification,
-  useDNotificationInternally,
+  useDNotificationPusher,
+  useDNotificationReceiver,
 };
