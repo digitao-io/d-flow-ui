@@ -28,11 +28,13 @@ function pushNotification(notification: DNotificationParams) {
     },
   ];
 
+  /*
   setTimeout(() => {
     const index = notifications.value.findIndex((n) => n.id === id);
     notifications.value.splice(index, 1);
     notifications.value = [...notifications.value];
   }, (notification.dismissInSeconds ?? 5) * 1000);
+  */
 }
 
 export function useDNotification() {
