@@ -16,6 +16,8 @@ function pushNotification(notification: DNotificationParams) {
   const id = notificationId.value;
   notificationId.value++;
 
+  console.log(uuid(notifications));
+
   notifications.value = [
     ...notifications.value,
     {
@@ -34,21 +36,21 @@ function pushNotification(notification: DNotificationParams) {
 }
 
 export function useDNotification() {
-  console.log(id(notifications));
+  console.log(uuid(notifications));
   return {
     pushNotification,
   };
 }
 
 export function useDNotificationInternally() {
-  console.log(id(notifications));
+  console.log(uuid(notifications));
   return {
     pushNotification,
     notifications,
   };
 }
 
-const id = (() => {
+const uuid = (() => {
   let currentId = 0;
   const map = new WeakMap();
 
