@@ -33,12 +33,14 @@ function pushNotification(notification: DNotificationParams) {
 }
 
 export function useDNotification() {
+  console.log(notifications);
   return {
     pushNotification,
   };
 }
 
 export function useDNotificationInternally() {
+  console.log(notifications);
   return {
     pushNotification,
     notifications,
