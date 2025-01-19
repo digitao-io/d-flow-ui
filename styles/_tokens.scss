@@ -20,6 +20,9 @@ $color-flavor2l: #becfdb;
 $color-flavor2l-t1: #d4dde2;
 $color-flavor2l-t2: #eceff1;
 
+$color-info: #4399ca;
+$color-success: #48b14d;
+$color-warn: #dd8b2e;
 $color-error: #dd2e2e;
 
 $space-xs: 0.25rem;
@@ -46,7 +49,7 @@ $line-height-title: 1;
 $line-height-text: 1.5;
 $text-transform-title: uppercase;
 
-$box-shadow-l1: 3px 3px 9px $color-neutral-g-t1;
+$box-shadow-l1: 3px 3px 6px $color-neutral-g;
 
 @mixin typography-title-xl {
   font-family: $font-family;
