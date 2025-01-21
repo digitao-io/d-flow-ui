@@ -1,3 +1,8 @@
-import DDropdown from "./DDropdown.vue";
+import DDropdown, {
+  type DDropdownOptionDefinition,
+} from "./DDropdown.vue";
 
-export { DDropdown };
+export {
+  DDropdown,
+  DDropdownOptionDefinition,
+};

@@ -77,7 +77,7 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { faAngleDown, faAngleUp } from "@fortawesome/free-solid-svg-icons";
 import { computed, nextTick, ref, watch } from "vue";
 
-interface OptionDefinition {
+export interface DDropdownOptionDefinition {
   label: string;
   value: string;
 }
