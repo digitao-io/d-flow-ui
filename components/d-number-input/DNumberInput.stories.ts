@@ -15,7 +15,7 @@ const meta: Meta<typeof DNumberInput> = {
   render: (args) => ({
     components: { DNumberInput },
     setup() {
-      const value = ref<string>("3.14");
+      const value = ref<string>("");
       return {
         args,
         value,

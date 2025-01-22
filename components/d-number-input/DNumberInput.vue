@@ -130,6 +130,10 @@ function handleBlur() {
 }
 
 function fromNumberToString(value: string): string {
+  if (!value) {
+    return "";
+  }
+
   const stringValue = isFixedDecimal.value ? Number(value).toFixed(props.decimalDigits) : Number(value).toString();
   const [rawIntegerPart, rawDecimalPart] = stringValue.split(".");
   let integerPart = "";
@@ -290,10 +294,10 @@ function onInput(ev: Event) {
   }
   else {
     value.value = integerPart
-    + (decimalPart ? props.decimalSeparator! + decimalPart : "");
+      + (decimalPart ? props.decimalSeparator! + decimalPart : "");
     target.value = integerPart
-    + ((newValue.endsWith(props.decimalSeparator!) || decimalPart) ? props.decimalSeparator : "")
-    + (decimalPart ? decimalPart : "");
+      + ((newValue.endsWith(props.decimalSeparator!) || decimalPart) ? props.decimalSeparator : "")
+      + (decimalPart ? decimalPart : "");
   }
 
   // Deal with caret position
