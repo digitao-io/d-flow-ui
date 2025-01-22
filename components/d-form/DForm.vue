@@ -27,7 +27,9 @@
 import { computed, ref } from "vue";
 import Ajv, { ErrorObject } from "ajv";
 
-const ajv = new Ajv();
+const ajv = new Ajv({
+  strictNumbers: true,
+});
 
 export type DFormValidationDefinition = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
