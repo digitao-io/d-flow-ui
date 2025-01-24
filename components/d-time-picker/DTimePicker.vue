@@ -29,6 +29,12 @@
 
       <div
         v-if="showDropdown"
+        class="d-time-picker__dropdown-modal"
+        @click.stop.prevent="toggleDropdown"
+      />
+
+      <div
+        v-if="showDropdown"
         class="d-time-picker__dropdown-area"
       >
         <div class="d-time-picker__section">
@@ -512,6 +518,14 @@ function onSubmit() {
     background-color: tokens.$color-flavor1;
     color: white;
     cursor: pointer;
+  }
+
+  &__dropdown-modal {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
   }
 
   &__dropdown-area {

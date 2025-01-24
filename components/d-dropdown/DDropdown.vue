@@ -29,6 +29,11 @@
       </button>
       <div
         v-if="showDropdown"
+        class="d-dropdown__dropdown-modal"
+        @click.stop.prevent="toggleDropdown"
+      />
+      <div
+        v-if="showDropdown"
         class="d-dropdown__dropdown-area"
       >
         <ul
@@ -84,7 +89,7 @@ export interface DDropdownOptionDefinition {
 
 const props = defineProps<{
   label: string;
-  options: OptionDefinition[];
+  options: DDropdownOptionDefinition[];
   placeholder?: string;
   noResultMessage?: string;
   noOptionMessage?: string;
@@ -135,7 +140,7 @@ function onInputEnterKeyDown() {
   selectOption(filteredOptions.value[0]);
 }
 
-function selectOption(option: OptionDefinition) {
+function selectOption(option: DDropdownOptionDefinition) {
   model.value = option.value;
   showDropdown.value = false;
 };
@@ -193,6 +198,14 @@ function toggleDropdown() {
     background-color: tokens.$color-flavor1;
     color: white;
     cursor: pointer;
+  }
+
+  &__dropdown-modal {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
   }
 
   &__dropdown-area {
