@@ -31,6 +31,10 @@
             </ul>
           </template>
 
+          <template v-else-if="item.type === 'slot'">
+            <slot :name="item.key" />
+          </template>
+
           <template v-else>
             {{ item.value }}
           </template>
@@ -41,10 +45,10 @@
 </template>
 
 <script setup lang="ts">
-interface DDataListValue {
+export interface DDataListValue {
   key: string;
   label: string;
-  type: "text" | "image" | "list";
+  type: "text" | "image" | "slot" | "list";
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   value: any;
 }

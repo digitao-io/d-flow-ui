@@ -1,3 +1,8 @@
-import DDataList from "./DDataList.vue";
+import DDataList, {
+  type DDataListValue,
+} from "./DDataList.vue";
 
-export { DDataList };
+export {
+  DDataList,
+  DDataListValue,
+};
