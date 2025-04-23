@@ -34,7 +34,7 @@
           <template v-else-if="item.type === 'slot'">
             <slot
               :name="item.key"
-              :value="item"
+              :value="item.value"
             />
           </template>
 
