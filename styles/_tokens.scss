@@ -117,6 +117,13 @@ $box-shadow-l1: 3px 3px 6px $color-neutral-g;
   line-height: $line-height-text;
 }
 
+@mixin typography-text-s--medium {
+  font-family: $font-family;
+  font-weight: $font-weight-medium;
+  font-size: $font-size-text-s;
+  line-height: $line-height-text;
+}
+
 @mixin round-edged-block {
   border-top-right-radius: 8px;
 }
