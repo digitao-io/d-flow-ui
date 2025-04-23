@@ -2,8 +2,8 @@
   <div class="d-data-list">
     <dl>
       <div
-        v-for="item in props.dataValues"
-        :key="item.key"
+        v-for="item, index in props.dataValues"
+        :key="`${item.key}-${index}`"
         class="d-data-list__item"
       >
         <dt
@@ -32,7 +32,10 @@
           </template>
 
           <template v-else-if="item.type === 'slot'">
-            <slot :name="item.key" />
+            <slot
+              :name="item.key"
+              :value="item"
+            />
           </template>
 
           <template v-else>
