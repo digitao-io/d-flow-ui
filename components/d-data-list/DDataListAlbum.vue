@@ -60,6 +60,10 @@ const nextImg = () => {
 
 <style lang="scss" scoped>
 .d-data-list-album {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: tokens.$space-s;
   width: 100%;
 
   &__image {
@@ -73,7 +77,6 @@ const nextImg = () => {
     gap: tokens.$space-s;
     align-items: center;
     justify-content: center;
-    margin-top: tokens.$space-s;
     width: 100%;
   }
 }
