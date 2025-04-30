@@ -11,6 +11,7 @@
     >
       <d-icon-button
         icon="fa-angle-left"
+        color-theme="form"
         @click="prevImg"
       />
       <span>
@@ -18,6 +19,7 @@
       </span>
       <d-icon-button
         icon="fa-angle-right"
+        color-theme="form"
         @click="nextImg"
       />
     </div>
