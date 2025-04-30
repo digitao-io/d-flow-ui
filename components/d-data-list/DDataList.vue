@@ -12,7 +12,11 @@
           {{ item.label }}
         </dt>
         <dd class="d-data-list__value">
-          <template v-if="item.type === 'image'">
+          <template v-if="item.type === 'text'">
+            {{ item.value }}
+          </template>
+
+          <template v-else-if="item.type === 'image'">
             <img
               :src="item.value"
               alt="This is a picture"
@@ -21,7 +25,7 @@
           </template>
 
           <template v-else-if="item.type === 'list'">
-            <ul class="d-data-list__item-list">
+            <ul class="d-data-list__list">
               <li
                 v-for="listItem of (item.value as string[])"
                 :key="listItem"
@@ -31,15 +35,20 @@
             </ul>
           </template>
 
-          <template v-else-if="item.type === 'slot'">
-            <slot
-              :name="item.key"
-              :value="item.value"
+          <template v-else-if="item.type === 'markdown'">
+            <!-- eslint-disable vue/no-v-html -->
+            <div
+              class="d-data-list__markdown"
+              v-html="marked(item.value)"
             />
+            <!-- eslint-enable vue/no-v-html -->
           </template>
 
-          <template v-else>
-            {{ item.value }}
+          <template v-else-if="item.type === 'slot'">
+            <slot
+              :name="item.slot!"
+              :value="item.value"
+            />
           </template>
         </dd>
       </div>
@@ -48,10 +57,13 @@
 </template>
 
 <script setup lang="ts">
+import { marked } from "marked";
+
 export interface DDataListValue {
   key: string;
   label: string;
-  type: "text" | "image" | "slot" | "list";
+  type: "text" | "image" | "list" | "markdown" | "slot";
+  slot?: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   value: any;
 }
@@ -81,10 +93,25 @@ const props = defineProps<{
     max-height: 360px;
   }
 
-  &__item-list {
+  &__list {
     margin: 0;
     padding: 0;
     padding-left: tokens.$space-l;
+  }
+
+  &__markdown {
+    padding: tokens.$space-s tokens.$space-m;
+    background-color: tokens.$color-flavor1l-t1;
+
+    :deep() {
+      h1, h2, h3, h4, h5, h6, p, ul, ol {
+        margin: tokens.$space-s 0 tokens.$space-s 0;
+      }
+
+      a {
+        color: tokens.$color-flavor1-s1;
+      }
+    }
   }
 
   &__value {
