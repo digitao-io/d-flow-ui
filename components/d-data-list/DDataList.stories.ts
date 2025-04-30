@@ -44,7 +44,10 @@ export const Default: Story = {
       { key: "name", label: "Name", value: "The King's Avatar", type: "text" },
       { key: "createdAt", label: "Erstellt", value: "8.Sep.2024 um 19:25:38", type: "text" },
       { key: "updatedAt", label: "Geändert", value: "17.Sep.2024 um 20:36:09", type: "text" },
-      { key: "cover", label: "Cover", value: "https://picsum.photos/800/600", type: "image" },
+      { key: "cover", label: "Cover", value: [
+        `https://picsum.photos/seed/${Math.floor(Math.random() * 1000)}/800/600`,
+        `https://picsum.photos/seed/${Math.floor(Math.random() * 1000)}/800/600`,
+      ], type: "album" },
       { key: "genre", label: "Genre", value: ["Action", "E-Sport"], type: "list" },
       { key: "details", label: "Beschreibung", value: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", type: "text" },
       { key: "slotText", label: "Slot Text", value: "Lorem ipsum", type: "slot", slot: "my-slot" },

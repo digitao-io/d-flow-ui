@@ -16,12 +16,10 @@
             {{ item.value }}
           </template>
 
-          <template v-else-if="item.type === 'image'">
-            <img
-              :src="item.value"
-              alt="This is a picture"
-              class="d-data-list__thumbnail"
-            >
+          <template v-else-if="item.type === 'album'">
+            <d-data-list-album
+              :item-values="item.value"
+            />
           </template>
 
           <template v-else-if="item.type === 'list'">
@@ -58,11 +56,12 @@
 
 <script setup lang="ts">
 import { marked } from "marked";
+import DDataListAlbum from "./DDataListAlbum.vue";
 
 export interface DDataListValue {
   key: string;
   label: string;
-  type: "text" | "image" | "list" | "markdown" | "slot";
+  type: "text" | "album" | "list" | "markdown" | "slot";
   slot?: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   value: any;
@@ -85,12 +84,6 @@ const props = defineProps<{
     @include tokens.typography-text-s--bold;
     color: tokens.$color-neutral-g;
     text-transform: uppercase;
-  }
-
-  &__thumbnail {
-    display: block;
-    max-width: 100%;
-    max-height: 360px;
   }
 
   &__list {
