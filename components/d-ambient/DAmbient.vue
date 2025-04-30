@@ -10,8 +10,8 @@
       <font-awesome-icon
         class="d-ambient__icon"
         :class="{
-          'd-ambient__icon--flavor1': !props.tableArea,
-          'd-ambient__icon--flavor2': props.tableArea,
+          'd-ambient__icon--flavor1': props.colorTheme === 'form',
+          'd-ambient__icon--flavor2': props.colorTheme === 'table',
         }"
         :icon="`fa-solid ${props.icon}`"
       />
@@ -24,14 +24,27 @@
 </template>
 
 <script setup lang="ts">
+import { PropType } from "vue";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
-const props = defineProps<{
-  icon: string;
-  iconSize: string;
-  containerWidth: string;
-  tableArea?: boolean;
-}>();
+const props = defineProps({
+  icon: {
+    type: String,
+    required: true,
+  },
+  iconSize: {
+    type: String,
+    required: true,
+  },
+  containerWidth: {
+    type: String,
+    required: true,
+  },
+  colorTheme: {
+    type: String as PropType<"table" | "form">,
+    default: "table",
+  },
+});
 </script>
 
 <style lang="scss" scoped>

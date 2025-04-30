@@ -52,6 +52,6 @@ export const Default: Story = {
 
 export const TableArea: Story = {
   args: {
-    tableArea: true,
+    colorTheme: "form",
   },
 };
