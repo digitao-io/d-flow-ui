@@ -27,7 +27,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
   faAngleLeft,
@@ -43,6 +43,10 @@ library.add(
 const props = defineProps<{
   itemValues: string[];
 }>();
+
+watch(() => props.itemValues, () => {
+  currentIndex.value = 0;
+});
 
 const currentIndex = ref<number>(0);
 const currentImgUrl = computed<string>(() => props.itemValues[currentIndex.value]);
