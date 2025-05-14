@@ -9,6 +9,7 @@
         type="text"
         :placeholder="props.placeholder"
         :value="displayedValue"
+        @keyup.backspace="onClear"
         @keydown.prevent
         @focus="onInputFocus"
       >
@@ -202,10 +203,18 @@
 
         <div class="d-time-picker__action">
           <d-button
-            class="d-time-picker__submit-button"
+            class="d-time-picker__action-button"
             @click.stop.prevent="onSubmit"
           >
             {{ props.submitButtonLabel }}
+          </d-button>
+
+          <d-button
+            class="d-time-picker__action-button"
+            secondary
+            @click.stop.prevent="onClear"
+          >
+            {{ props.clearButtonLabel }}
           </d-button>
         </div>
       </div>
@@ -240,6 +249,7 @@ export interface DTimePickerFormat {
 const props = defineProps<{
   label: string;
   submitButtonLabel?: string;
+  clearButtonLabel?: string;
   type: "time" | "date" | "month";
   format: DTimePickerFormat;
   numberOfYears: number;
@@ -260,7 +270,7 @@ const internalValue = computed<DateTime>({
 });
 
 const displayedValue = computed<string>(
-  () => internalValue.value.toFormat(props.format.display),
+  () => model.value ? internalValue.value.toFormat(props.format.display) : "",
 );
 
 const currentYear = computed<number>(() => internalValue.value.year);
@@ -468,6 +478,11 @@ function onSubmit() {
   showDropdown.value = false;
   emit("update", internalValue.value.toISO()!);
 }
+
+function onClear() {
+  model.value = "";
+  emit("update", "");
+}
 </script>
 
 <style scoped lang="scss">
@@ -535,7 +550,7 @@ function onSubmit() {
     right: 0;
     z-index: 1;
     padding: tokens.$space-m;
-    background-color: tokens.$color-flavor1l-t1;
+    background-color: tokens.$color-flavor1l-t2;
   }
 
   &__section {
@@ -682,6 +697,7 @@ function onSubmit() {
 
   &__action {
     display: flex;
+    gap: tokens.$space-s;
     justify-content: center;
   }
 

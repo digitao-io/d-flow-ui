@@ -15,7 +15,7 @@ const meta: Meta<typeof DTimePicker> = {
   render: (args) => ({
     components: { DTimePicker },
     setup() {
-      const value = ref<string>("2025-01-19T15:31:00+01:00");
+      const value = ref<string>("");
       return {
         value,
         args,
@@ -42,6 +42,7 @@ export const Default: Story = {
   args: {
     label: "Created At",
     submitButtonLabel: "Done",
+    clearButtonLabel: "Clear",
     type: "time",
     format: {
       display: "dd. MMM. yyyy', um' HH:mm 'Uhr'",
@@ -60,6 +61,7 @@ export const DateOnly: Story = {
     label: "Birthday",
     type: "date",
     submitButtonLabel: "Done",
+    clearButtonLabel: "Clear",
     format: {
       display: "DD",
       firstWeekday: "monday",
@@ -75,6 +77,7 @@ export const MonthOnly: Story = {
     label: "Published In",
     type: "month",
     submitButtonLabel: "Done",
+    clearButtonLabel: "Clear",
     format: {
       display: "MMM, yyyy",
     },
@@ -89,6 +92,7 @@ export const Use24HourTime: Story = {
     label: "Updated At",
     type: "time",
     submitButtonLabel: "Done",
+    clearButtonLabel: "Clear",
     format: {
       display: "dd. MMM. yyyy', um' HH:mm 'Uhr'",
       firstWeekday: "sunday",
