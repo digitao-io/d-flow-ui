@@ -43,12 +43,14 @@ export const Default: Story = {
     label: "Created At",
     submitButtonLabel: "Done",
     clearButtonLabel: "Clear",
-    type: "time",
+    type: "minute",
     format: {
-      display: "dd. MMM. yyyy', um' HH:mm 'Uhr'",
+      display: "dd. MMM yyyy', um' HH:mm 'Uhr'",
       firstWeekday: "monday",
       use24HourTime: true,
     },
+    locale: "de",
+    timeZone: "Europe/Berlin",
     numberOfYears: 6,
     numberOfMonths: 6,
     placeholder: "Pick a time",
@@ -59,13 +61,15 @@ export const Default: Story = {
 export const DateOnly: Story = {
   args: {
     label: "Birthday",
-    type: "date",
+    type: "day",
     submitButtonLabel: "Done",
     clearButtonLabel: "Clear",
     format: {
       display: "DD",
       firstWeekday: "monday",
     },
+    locale: "en",
+    timeZone: "Europe/Berlin",
     numberOfYears: 5,
     numberOfMonths: 5,
     placeholder: "Pick a date",
@@ -81,6 +85,8 @@ export const MonthOnly: Story = {
     format: {
       display: "MMM, yyyy",
     },
+    locale: "en",
+    timeZone: "Europe/Berlin",
     numberOfYears: 5,
     numberOfMonths: 5,
     placeholder: "Pick a month",
@@ -90,14 +96,16 @@ export const MonthOnly: Story = {
 export const Use24HourTime: Story = {
   args: {
     label: "Updated At",
-    type: "time",
+    type: "minute",
     submitButtonLabel: "Done",
     clearButtonLabel: "Clear",
     format: {
-      display: "dd. MMM. yyyy', um' HH:mm 'Uhr'",
+      display: "dd. MMM yyyy', um' HH:mm 'Uhr'",
       firstWeekday: "sunday",
       use24HourTime: false,
     },
+    locale: "de",
+    timeZone: "Europe/Berlin",
     numberOfYears: 5,
     numberOfMonths: 5,
     placeholder: "Pick a time",

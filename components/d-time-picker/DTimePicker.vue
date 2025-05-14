@@ -113,7 +113,7 @@
         </div>
 
         <div
-          v-if="props.type === 'date' || props.type === 'time'"
+          v-if="props.type === 'day' || props.type === 'minute'"
           class="d-time-picker__section"
         >
           <div class="d-time-picker__calendar">
@@ -250,8 +250,10 @@ const props = defineProps<{
   label: string;
   submitButtonLabel?: string;
   clearButtonLabel?: string;
-  type: "time" | "date" | "month";
+  type: "minute" | "day" | "month";
   format: DTimePickerFormat;
+  locale: string;
+  timeZone: string;
   numberOfYears: number;
   numberOfMonths: number;
   placeholder?: string;
@@ -265,8 +267,18 @@ const emit = defineEmits<{
 const model = defineModel<string>();
 
 const internalValue = computed<DateTime>({
-  get: () => model.value ? DateTime.fromISO(model.value) : DateTime.now(),
-  set: (value) => model.value = (value ? (value.toISO() ?? "") : ""),
+  get: () => model.value
+    ? DateTime.fromISO(model.value).setLocale(props.locale).setZone(props.timeZone)
+    : DateTime.now().setLocale(props.locale).setZone(props.timeZone),
+  set: (value) => {
+    model.value = (value
+      ? (value
+          .setZone(props.timeZone)
+          .startOf(props.type)
+          .toUTC()
+          .toISO() ?? "")
+      : "");
+  },
 });
 
 const displayedValue = computed<string>(
@@ -342,7 +354,7 @@ function onSelectMonth(month: number) {
 }
 
 function formatMonth(month: number) {
-  return DateTime.fromObject({ month }).toFormat("MMM");
+  return DateTime.fromObject({ month }).setLocale(props.locale).toFormat("MMM");
 }
 
 const currentDay = computed<number>(() => internalValue.value.day);
@@ -384,7 +396,10 @@ const weeks = computed<Array<Array<number | null>>>(() => {
 });
 
 const weekdayNames = computed<string[]>(() => {
-  const start = DateTime.now().set({ weekday: props.format.firstWeekday === "sunday" ? 7 : 1 });
+  const start = DateTime.now()
+    .setLocale(props.locale)
+    .setZone(props.timeZone)
+    .set({ weekday: props.format.firstWeekday === "sunday" ? 7 : 1 });
   const results = [];
 
   for (let i = 0; i < 7; i++) {
@@ -476,7 +491,11 @@ function toggleDropdown() {
 
 function onSubmit() {
   showDropdown.value = false;
-  emit("update", internalValue.value.toISO()!);
+  emit("update", internalValue.value
+    .setZone(props.timeZone)
+    .startOf(props.type)
+    .toUTC()
+    .toISO() ?? ""!);
 }
 
 function onClear() {
